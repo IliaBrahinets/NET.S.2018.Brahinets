@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortTest", "MergeSortTest\MergeSortTest.csproj", "{572A4572-A24B-472B-A066-2B5C5A3F0D14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortIListExtension", "MergeSortListExtension\MergeSortIListExtension.csproj", "{52BB33EB-A277-4C78-8F98-04A78DD1D2BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortIListExtension", "MergeSortIListExtension\MergeSortIListExtension.csproj", "{52BB33EB-A277-4C78-8F98-04A78DD1D2BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
