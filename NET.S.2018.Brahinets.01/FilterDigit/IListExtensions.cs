@@ -8,7 +8,6 @@ namespace FilterDigit
 {
     public static class IListExtensions
     {
-
         /// <summary>
         /// Filters the sequence to contain digits that contain the specified number.
         /// </summary>
@@ -18,12 +17,12 @@ namespace FilterDigit
         /// <returns>The filtered sequence.</returns>
         public static IList<int> FilterDigit(this IList<int> arr, int number)
         {
-            if(arr == null)
+            if (arr == null)
             {
                 throw new ArgumentNullException("Array is null!");
             }
 
-            if(number > 9)
+            if (number > 9)
             {
                 throw new ArgumentException("must be 0 <= number <= 9");
             }
@@ -39,12 +38,11 @@ namespace FilterDigit
             }
 
             return answer;
-
         }
 
         private static bool IsNumberContainDigit(int digit, int number)
         {
-            if(digit < 0)
+            if (digit < 0)
             {
                 digit *= -1;
             }
@@ -57,11 +55,10 @@ namespace FilterDigit
                 }
 
                 digit = digit / 10;
-
-            } while (digit != 0);
+            }
+            while (digit != 0);
 
             return false;
-
         }
     }
 }

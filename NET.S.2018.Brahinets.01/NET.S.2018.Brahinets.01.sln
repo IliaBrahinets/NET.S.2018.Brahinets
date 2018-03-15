@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterDigit", "FilterDigit\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterDigit.NUnitTests", "FilterDigit.Tests\FilterDigit.NUnitTests.csproj", "{797D89AD-404D-4C09-8890-681970F3B0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterDigit.MSUnitTests", "FilterDigit.MSUnitTests\FilterDigit.MSUnitTests.csproj", "{9BCC5AAD-077D-4C9C-AC99-861CDD5F581F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterDigit.MSUnitDDTTests", "FilterDigit.MSUnitTests\FilterDigit.MSUnitDDTTests.csproj", "{9BCC5AAD-077D-4C9C-AC99-861CDD5F581F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

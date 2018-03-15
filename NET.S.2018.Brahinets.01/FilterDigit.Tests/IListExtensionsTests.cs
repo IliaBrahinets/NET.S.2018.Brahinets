@@ -41,9 +41,5 @@ namespace FilterDigit.NUnitTests
 
             Assert.Throws<ArgumentException>(() => arr.FilterDigit(number));
         }
-
-
-
-
     }
 }

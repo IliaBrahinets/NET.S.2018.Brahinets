@@ -1,6 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<TestCases>
+﻿<TestCases>
   <TestCase>
-    <Name>1</Name>
+    <Array>[14,213,32]</Array>
+    <Number>2</Number>
+    <ExpectedResult>[213,32]</ExpectedResult>
+  </TestCase>
+  <TestCase>
+    <Array>[888,321,785]</Array>
+    <Number>8</Number>
+    <ExpectedResult>[888,785]</ExpectedResult>
+  </TestCase>
+  <TestCase>
+    <Array>[-782,21,-7]</Array>
+    <Number>7</Number>
+    <ExpectedResult>[-782,-7]</ExpectedResult>
+  </TestCase>
+  <TestCase>
+    <Array>[-782,21,-7]</Array>
+    <Number>10</Number>
+    <ExpectedException>System.ArgumentException</ExpectedException>
+  </TestCase>
+  <TestCase>
+    <Array></Array>
+    <Number>1</Number>
+    <ExpectedException>System.ArgumentNullException</ExpectedException>
   </TestCase>
 </TestCases>
