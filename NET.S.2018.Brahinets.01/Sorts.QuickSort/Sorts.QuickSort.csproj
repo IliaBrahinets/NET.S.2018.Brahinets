@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{572A4572-A24B-472B-A066-2B5C5A3F0D14}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MergeSortTest</RootNamespace>
-    <AssemblyName>MergeSortTest</AssemblyName>
+    <ProjectGuid>{5DF47DE3-E31C-468A-9FF9-6FAAE859F8C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sorts.QuickSort</RootNamespace>
+    <AssemblyName>Sorts.QuickSort</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,16 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="IListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MergeSortListExtension\MergeSortIListExtension.csproj">
-      <Project>{52bb33eb-a277-4c78-8f98-04a78dd1d2bd}</Project>
-      <Name>MergeSortIListExtension</Name>
+    <ProjectReference Include="..\Sorts.SortDataValidation\Sorts.SortDataValidation.csproj">
+      <Project>{d9bc3f88-89be-4c9a-a8c4-95c5bc49a755}</Project>
+      <Name>Sorts.SortDataValidation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
