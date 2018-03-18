@@ -54,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BitsTask\SpecialBitInsertion.csproj">
+    <ProjectReference Include="..\SpecialBitInsertion\SpecialBitInsertion.csproj">
       <Project>{0f7d708f-b3ea-457d-8740-f2bdb6445fab}</Project>
       <Name>SpecialBitInsertion</Name>
     </ProjectReference>

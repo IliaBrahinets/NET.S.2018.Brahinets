@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialBitInsertion", "BitsTask\SpecialBitInsertion.csproj", "{0F7D708F-B3EA-457D-8740-F2BDB6445FAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialBitInsertion", "SpecialBitInsertion\SpecialBitInsertion.csproj", "{0F7D708F-B3EA-457D-8740-F2BDB6445FAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialBitInsertion.NUnitTests", "SpecialBitInsertion.NUnitTests\SpecialBitInsertion.NUnitTests.csproj", "{88C3CD85-C957-438C-BDE0-015D6996CC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtension", "Math\MathExtension.csproj", "{DE0FF791-1F68-4142-9D85-1F893204A45F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtension", "MathExtension\MathExtension.csproj", "{DE0FF791-1F68-4142-9D85-1F893204A45F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtension.NUnitTests", "MathExtensionTests\MathExtension.NUnitTests.csproj", "{CA420CAA-696D-4F86-962D-7BA6D34D184D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtension.NUnitTests", "MathExtension.NUnitTests\MathExtension.NUnitTests.csproj", "{CA420CAA-696D-4F86-962D-7BA6D34D184D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

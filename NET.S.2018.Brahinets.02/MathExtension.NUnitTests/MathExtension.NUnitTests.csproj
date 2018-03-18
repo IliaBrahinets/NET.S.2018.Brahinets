@@ -54,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Math\MathExtension.csproj">
+    <ProjectReference Include="..\MathExtension\MathExtension.csproj">
       <Project>{de0ff791-1f68-4142-9d85-1f893204a45f}</Project>
       <Name>MathExtension</Name>
     </ProjectReference>
