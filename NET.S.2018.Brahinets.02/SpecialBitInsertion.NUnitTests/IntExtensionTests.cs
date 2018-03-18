@@ -43,7 +43,7 @@ namespace SpecialBitInsertion.NUnitTests
         [TestCaseSource(nameof(TestData))]
         public int SpecialBitInsertionMethod(int numberSource, int numberIn, int i, int j)
         {
-            return Int32Extension.SpecialBitInsertionv2(numberSource, numberIn, i, j);
+            return Int32Extension.SpecialBitInsertionV2(numberSource, numberIn, i, j);
         }
 
         [Test]

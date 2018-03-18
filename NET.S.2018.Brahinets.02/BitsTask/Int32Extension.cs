@@ -51,8 +51,25 @@ namespace SpecialBitInsertion
             return answer;
         }
 
-        public static int SpecialBitInsertionv2(int numberSource, int numberIn, int i, int j)
+        /// <summary>
+        /// Inserting one number into another so that the second number occupies the position from bit j to bit i (bits are numbered from right to left).
+        /// </summary>
+        /// <param name="numberSource">The first number.</param>
+        /// <param name="numberIn">The second number.</param>
+        /// <exception cref="ArgumentOutOfRangeException">i or j is less than zero or more than 31.</exception>
+        /// <exception cref="ArgumentException">i is more than j.</exception>
+        public static int SpecialBitInsertionV2(int numberSource, int numberIn, int i, int j)
         {
+            if (i < 0 || j < 0 || i > 31 || j > 31)
+            {
+                throw new ArgumentOutOfRangeException($"{ nameof(i) } or { nameof(j) } is out of the range[0..31]");
+            }
+
+            if (i > j)
+            {
+                throw new ArgumentException($"values of { nameof(i) },{ nameof(j) } are not matched to { nameof(j) } > { nameof(i) }");
+            }
+
             int unitMask = 2;
 
             for (int k = 1; k <= (j - i); k++)

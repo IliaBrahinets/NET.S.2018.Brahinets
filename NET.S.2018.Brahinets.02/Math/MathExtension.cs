@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 public class MathExtension
 {
     /// <summary>
-    /// Returns the n-th root of number, by Newton's method
-    /// as a initial guess is used number/n
+    /// Returns the nth root of number, by Newton's method
+    /// as a initial guess is used number/n.
     /// </summary>
-    /// <param name="n">The power of root must be > 0</param>
-    /// <param name="precision">The precision needed to reach, must be > 0</param>
-    /// <param name="maxIterations">This is a limit to iterations perfomed by Newton's method, by default is 1000 </param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when n is less than or equal to zero or precision is less than zero 0 </exception>
-    /// <exception cref="ArgumentException">Thrown when the root power is odd and the number is less than zero or the given precision can't be reached through the maxIterations</exception>
+    /// <param name="n">The power of root must be > 0.</param>
+    /// <param name="precision">The precision needed to reach, must be > 0.</param>
+    /// <param name="maxIterations">This is a limit to iterations performed by Newton's method, by default is 1000.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when n is less than or equal to zero or precision is less than zero 0.</exception>
+    /// <exception cref="ArgumentException">Thrown when the root power is odd and the number is less than zero or the given precision can't be reached through the maxIterations.</exception>
     public static double FindNthRoot(double number, uint n, double precision, uint maxIterations = 1000)
     {
         if (n <= 0)
@@ -65,7 +65,7 @@ public class MathExtension
     /// Returns the closest bigger number to the given number,
     /// if such number don't exist returns null.
     /// </summary>
-    /// <param name="executionTime">As ticks.</param>
+    /// <param name="executionTime">Returned as ticks.</param>
     public static uint? FindNextBiggerNumber(uint number, out long executionTime)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
