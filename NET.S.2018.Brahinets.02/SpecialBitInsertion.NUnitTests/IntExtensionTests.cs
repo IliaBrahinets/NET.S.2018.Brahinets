@@ -65,7 +65,7 @@ namespace SpecialBitInsertion.NUnitTests
             int numberIn = 7;
             int i = 7;
             int j = 5;
-
+            
             Assert.Throws<ArgumentException>(() => Int32Extension.SpecialBitInsertion(numberSource, numberIn, i, j));
         }
 

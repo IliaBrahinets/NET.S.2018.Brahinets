@@ -77,7 +77,7 @@ public class MathExtensionTests
     [TestCase(20u, ExpectedResult = null)]
     [TestCase(1987654321u, ExpectedResult = 2113456789)]
     [TestCase(0u, ExpectedResult = null)]
-    [TestCase(UInt32.MaxValue, ExpectedResult = null)]
+    [TestCase(UInt32.MaxValue,ExpectedResult = null)]
     public uint? FindNextBiggerNumber(uint number)
     {
         long executionTime = 0;

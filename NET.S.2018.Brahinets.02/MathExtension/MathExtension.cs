@@ -8,12 +8,12 @@ public class MathExtension
 {
     /// <summary>
     /// Returns the nth root of number, by Newton's method
-    /// as a initial guess is used number/n.
+    /// as a initial guess used number/n.
     /// </summary>
-    /// <param name="n">The power of root must be > 0.</param>
-    /// <param name="precision">The precision needed to reach, must be > 0.</param>
+    /// <param name="n">The power of root must be more than 0.</param>
+    /// <param name="precision">The precision needed to reach, must be more or equal to 0.</param>
     /// <param name="maxIterations">This is a limit to iterations performed by Newton's method, by default is 1000.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when n is less than or equal to zero or precision is less than zero 0.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when n is less than or equal to 0 or precision is less than 0.</exception>
     /// <exception cref="ArgumentException">Thrown when the root power is odd and the number is less than zero or the given precision can't be reached through the maxIterations.</exception>
     public static double FindNthRoot(double number, uint n, double precision, uint maxIterations = 1000)
     {
@@ -50,7 +50,7 @@ public class MathExtension
 
             x_kprev = x_k;
             x_k = (x_k * (n - 1) * reverseN) 
-                + (number / (Math.Pow(x_k, n - 1) * n));
+                + (reverseN * number / (Math.Pow(x_k, n - 1)));
 
             currPrecision = Math.Abs(x_k - x_kprev);
 
@@ -63,13 +63,20 @@ public class MathExtension
 
     /// <summary>
     /// Returns the closest bigger number to the given number,
-    /// if such number don't exist returns null.
+    /// if such number doesn't exist returns null.
     /// </summary>
     /// <param name="executionTime">Returned as ticks.</param>
     public static uint? FindNextBiggerNumber(uint number, out long executionTime)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         watch.Start();
+
+        if(number == uint.MaxValue)
+        {
+            watch.Stop();
+            executionTime = watch.ElapsedTicks;
+            return null;
+        }
 
         sbyte[] digits = new sbyte[10];
 
@@ -116,7 +123,7 @@ public class MathExtension
             }
         }
 
-        ///sort the tail in oscending order
+        ///sort the tail in ascending order
         for (uint i = 0; i <= 9; i++)
         {
             while (digits[i] != 0)

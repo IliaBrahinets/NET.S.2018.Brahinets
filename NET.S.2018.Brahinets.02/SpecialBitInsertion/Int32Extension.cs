@@ -56,7 +56,7 @@ namespace SpecialBitInsertion
         /// </summary>
         /// <param name="numberSource">The first number.</param>
         /// <param name="numberIn">The second number.</param>
-        /// <exception cref="ArgumentOutOfRangeException">i or j is less than zero or more than 31.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">i or j is less than 0 or more than 31.</exception>
         /// <exception cref="ArgumentException">i is more than j.</exception>
         public static int SpecialBitInsertionV2(int numberSource, int numberIn, int i, int j)
         {
