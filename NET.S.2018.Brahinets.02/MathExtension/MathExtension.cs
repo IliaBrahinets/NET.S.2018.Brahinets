@@ -15,7 +15,7 @@ public class MathExtension
     /// <param name="maxIterations">This is a limit to iterations performed by Newton's method, by default is 1000.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when n is less than or equal to 0 or precision is less than 0.</exception>
     /// <exception cref="ArgumentException">Thrown when the root power is odd and the number is less than zero or the given precision can't be reached through the maxIterations.</exception>
-    public static double FindNthRoot(double number, uint n, double precision, uint maxIterations = 1000)
+    public static double FindNthRoot(double number, int n, double precision, int maxIterations = 1000)
     {
         if (n <= 0)
         {
@@ -38,7 +38,7 @@ public class MathExtension
         double x_kprev;
         double currPrecision;
 
-        double reverseN = 1 / (double)n;
+        double reverseN = 1.0 / n;
 
         do
         {
@@ -65,23 +65,23 @@ public class MathExtension
     /// Returns the closest bigger number to the given number,
     /// if such number doesn't exist returns null.
     /// </summary>
-    /// <param name="executionTime">Returned as ticks.</param>
-    public static uint? FindNextBiggerNumber(uint number, out long executionTime)
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when number is less than zero.</exception>
+    public static int? FindNextBiggerNumber(int number)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        watch.Start();
-
-        if(number == uint.MaxValue)
+        if (number < 0)
         {
-            watch.Stop();
-            executionTime = watch.ElapsedTicks;
+            throw new ArgumentOutOfRangeException($"{ nameof(number) } must not be less than zero");
+        }
+
+        if (number == int.MaxValue)
+        {
             return null;
         }
 
         sbyte[] digits = new sbyte[10];
 
-        uint digit = 0;
-        uint prevDigit = number % 10;
+        int digit = 0;
+        int prevDigit = number % 10;
         digits[prevDigit]++;
 
         number /= 10;
@@ -106,13 +106,11 @@ public class MathExtension
 
         if (alreadyMax)
         {
-            watch.Stop();
-            executionTime = watch.ElapsedTicks;
             return null;
         }
 
         ///find the min but more than the digit
-        for (uint i = digit + 1; i <= prevDigit; i++)
+        for (int i = digit + 1; i <= prevDigit; i++)
         {
             if (digits[i] != 0)
             {
@@ -124,7 +122,7 @@ public class MathExtension
         }
 
         ///sort the tail in ascending order
-        for (uint i = 0; i <= 9; i++)
+        for (int i = 0; i <= 9; i++)
         {
             while (digits[i] != 0)
             {
@@ -134,8 +132,25 @@ public class MathExtension
             }
         }
 
+        return number;
+    }
+
+    /// <summary>
+    /// Returns the closest bigger number to the given number,
+    /// if such number doesn't exist returns null.
+    /// </summary>
+    /// <param name="executionTime">Returned as ticks.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when number is less than zero.</exception>
+    public static int? FindNextBiggerNumber(int number, out long executionTime)
+    {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        watch.Start();
+
+        int? answer = FindNextBiggerNumber(number);
+
         watch.Stop();
         executionTime = watch.ElapsedTicks;
-        return number;
+
+        return answer;
     }
 }
