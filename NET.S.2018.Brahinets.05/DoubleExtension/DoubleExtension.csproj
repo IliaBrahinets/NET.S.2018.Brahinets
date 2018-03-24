@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoubleExtension%28WorkingOnYet%29.cs" />
+    <Compile Include="DoubleExtensionV2.cs" />
     <Compile Include="DoubleExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

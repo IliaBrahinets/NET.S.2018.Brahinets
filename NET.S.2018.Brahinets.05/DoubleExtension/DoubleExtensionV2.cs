@@ -22,7 +22,7 @@ public static class DoubleExtensionV2
         long signBit = TakeSign(value);
         long exponent = TakeExponent(value);
         long significand = TakeSignificand(value, (int)exponent);
-
+         
         return LongToBitsString((signBit << 63) | (exponent << 52) | significand);
 
     }
@@ -41,7 +41,17 @@ public static class DoubleExtensionV2
 
         if (double.IsNaN(value))
         {
-            return LongToBitsString(0x7FF8000000000000);
+            return LongToBitsString(0xFFF8000000000000);
+        }
+
+        if(double.MaxValue == value)
+        {
+            return LongToBitsString(0x7FEFFFFFFFFFFFFF);
+        }
+        
+        if(double.MinValue == value)
+        {
+            return LongToBitsString(0xFFEFFFFFFFFFFFFF);
         }
 
         return null;
@@ -123,7 +133,6 @@ public static class DoubleExtensionV2
 
     private static int TakeExponent(double value)
     { 
-
         if (value < 0)
         {
             value = -value;
