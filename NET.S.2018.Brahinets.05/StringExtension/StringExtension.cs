@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Converters{
-
+namespace Converters
+{
     public static class StringExtension
     {
+        /// <summary>
+        /// Convert the given number to the given notation.
+        /// </summary>
+        /// <exception cref="OverflowException">Thrown when the number exceeds Int.MaxValue.</exception>
+        /// <exception cref="ArgumentException">Thrown when the number or the notation is null.</exception>
         public static int ToDecmialConverter(this string number, Notation notation)
         {
             ToDecmialConverterValidator(number, notation);
@@ -52,7 +57,6 @@ namespace Converters{
                 {
                     throw new ArgumentException($"the symbol of given {nameof(number)} is not contained in the notation's alphabet");
                 }
-
             }
 
             return answer;
@@ -68,18 +72,26 @@ namespace Converters{
             if (notation == null)
             {
                 throw new ArgumentNullException($"{nameof(notation)} is null");
-            }           
+            }
         }
 
         private static int GetNumeric(char symb, Notation notation)
         {
             return notation.Alphabet.IndexOf(symb);
         }
-
     }
 
     public class Notation
     {
+        public Notation(int @base)
+        {
+            if (@base < MinBase || @base > MaxBase)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(@base)} must be >= {MinBase} and <= {MaxBase}");
+            }
+
+            Base = @base;
+        }
 
         private int _Base;
 
@@ -89,6 +101,7 @@ namespace Converters{
             {
                 return _Base;
             }
+
             set
             {
                 _Base = value;
@@ -100,25 +113,13 @@ namespace Converters{
 
         public string Alphabet { get; private set; }
 
-        public Notation(int @base)
-        {
-            if (@base < MinBase || @base > MaxBase)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(@base)} must be >= {MinBase} and <= {MaxBase}");
-            }
-
-            Base = @base;
-        }
-
         private const int MinBase = 2;
 
         private const int MaxBase = 16;
-       
+
         private void CreateAlphabet()
         {
             Alphabet = _Alphabet.Substring(0, Base);
         }
     }
-
 }
-
