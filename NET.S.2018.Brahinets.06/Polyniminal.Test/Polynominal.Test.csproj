@@ -54,6 +54,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DoubleEqualityExtension\DoubleEqualityExtension.csproj">
+      <Project>{99c18169-8fba-4750-b8d2-0c270770f31f}</Project>
+      <Name>DoubleEqualityExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Polynomial\Polynominal.csproj">
       <Project>{a8b4f2bd-de5f-438c-928c-82da3f52074e}</Project>
       <Name>Polynominal</Name>

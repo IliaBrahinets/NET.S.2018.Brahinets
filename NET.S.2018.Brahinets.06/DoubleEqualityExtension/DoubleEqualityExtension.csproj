@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A8B4F2BD-DE5F-438C-928C-82DA3F52074E}</ProjectGuid>
+    <ProjectGuid>{99C18169-8FBA-4750-B8D2-0C270770F31F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Polynomial</RootNamespace>
-    <AssemblyName>Polynomial</AssemblyName>
+    <RootNamespace>DoubleEqualityExtension</RootNamespace>
+    <AssemblyName>DoubleEqualityExtension</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,14 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Polynominal.cs" />
+    <Compile Include="DoubleEqualityExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DoubleEqualityExtension\DoubleEqualityExtension.csproj">
-      <Project>{99c18169-8fba-4750-b8d2-0c270770f31f}</Project>
-      <Name>DoubleEqualityExtension</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,11 +9,24 @@ public class Polynominal:IEnumerable<double>
 {
     public int Degree { get; }
 
-    public double this[int i]
+    public const double DefaultAccuracy = 0.001;
+    public double Accuracy { get; }
+
+    public double this[int variableDegree]
     {
         get
         {
-            return Coeffs[i];
+            if(variableDegree > Degree + 1)
+            {
+                return 0;
+            }
+
+            if(variableDegree < 0)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(variableDegree)} can't be < 0");
+            }
+
+            return Coeffs[variableDegree];
         }
     }
 
@@ -22,8 +35,9 @@ public class Polynominal:IEnumerable<double>
         AscendingOrder,
         DecreasingOrder
     }
+    public const CoeffsOrder DefaultCoeffsOrder = CoeffsOrder.AscendingOrder;
 
-    public Polynominal(double[] coeffs, CoeffsOrder coeffsOrder = CoeffsOrder.AscendingOrder)
+    public Polynominal(double[] coeffs, CoeffsOrder coeffsOrder = DefaultCoeffsOrder, double accuracy = DefaultAccuracy)
     {
         if(coeffs == null)
         {
@@ -59,6 +73,8 @@ public class Polynominal:IEnumerable<double>
         }
 
         Degree = Coeffs.Length - 1;
+
+        Accuracy = accuracy;
     }
 
     public static Polynominal Add(Polynominal a, Polynominal b)
@@ -147,13 +163,12 @@ public class Polynominal:IEnumerable<double>
 
     public string ToString(string separator)
     {
-        if (this.Degree == 0)
-        {
-            return String.Empty;
-        }
-
         StringBuilder result = new StringBuilder();
 
+        if(Degree == 0)
+        {
+            return $"{Coeffs[0]}";
+        }
         result.Append(Coeffs[Degree + 1]);
 
         int remain = Degree;
@@ -184,9 +199,7 @@ public class Polynominal:IEnumerable<double>
 
         for(int i = 0; i <= this.Degree; i++)
         {
-            //so bad!!!
-            //working on
-            if(this.Coeffs[i] != other.Coeffs[i])
+            if (!this.Coeffs[i].AccurateEquals(other.Coeffs[i], Accuracy))
             {
                 return false;
             }
@@ -220,9 +233,7 @@ public class Polynominal:IEnumerable<double>
         {
             int i = coeffs.Length - 1;
 
-            //so bad!!!
-            //working on
-            while (i >= 0 && coeffs[i] == 0)
+            while (i >= 0 && coeffs[i].AccurateEquals(0, Accuracy))
             {
                 i--;
             }
@@ -238,9 +249,7 @@ public class Polynominal:IEnumerable<double>
         {
             int i = 0;
 
-            //so bad!!!
-            //working on
-            while (i < coeffs.Length && coeffs[i] == 0)
+            while (i < coeffs.Length && coeffs[i].AccurateEquals(0, Accuracy))
             {
                 i++;
             }

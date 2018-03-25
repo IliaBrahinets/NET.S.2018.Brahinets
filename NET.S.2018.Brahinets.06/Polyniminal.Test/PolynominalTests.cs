@@ -11,22 +11,22 @@ public class PolynominalTests
 
     private static TestContext TestContext { get; set; }
 
-    [Test]
-    public void AddMethod()
+    [TestCase(new[] {1.0,4.0,6.0}, new[] { 6.0, 5.5, 2.3 })]
+    public void AddMethod(double[] CoeffsIn, double[] CoeffsOut)
     {
-        double[] Coeffs = { 0, 0, 0, 1.0, 2.0, 3.5 };
+        double[] Coeffs = { 3.5,0,0 };
 
         Polynominal a = new Polynominal(Coeffs);
         Polynominal b = new Polynominal(Coeffs);
 
         Polynominal c = a * b;
 
-        foreach(double item in c)
+        foreach (double item in a)
         {
-            TestContext.WriteLine(item);
+            TestContext.WriteLine(a.ToString());
         }
 
-        CollectionAssert.AreEqual(a, c);
+        Assert.True(a.Equals(b));
     }
 }
 
