@@ -248,7 +248,7 @@ public class Polynominal
             return false;
         }
 
-        return left.Equals(right);
+        return IsEqual(left, right, null);
     }
 
     public static bool operator!=(Polynominal left, Polynominal right)
@@ -293,9 +293,7 @@ public class Polynominal
 
         Polynominal other = obj as Polynominal;
 
-        double equalityAccuracy = AccuracySelectStrategy(this.Accuracy, other.Accuracy);
-
-        return Equals(other, equalityAccuracy);
+        return IsEqual(this, other, null);
     }
 
     public bool Equals(Polynominal other, double accuracy)
@@ -310,11 +308,28 @@ public class Polynominal
             return true;
         }
 
-        int maxDegree = Math.Max(this.Degree, other.Degree);
+        return IsEqual(this, other, accuracy);
+        
+    }
+
+    private static bool IsEqual(Polynominal a, Polynominal b, double? accuracy)
+    {
+        double equalityAccuracy;
+
+        if (accuracy == null)
+        {
+            equalityAccuracy = AccuracySelectStrategy(a.Accuracy, b.Accuracy);
+        }
+        else
+        {
+            equalityAccuracy = (double)accuracy;
+        }
+
+        int maxDegree = Math.Max(a.Degree, b.Degree);
 
         for (int i = 0; i <= maxDegree; i++)
         {
-            if (!this[i].AccurateEquals(other[i], accuracy))
+            if (!a[i].AccurateEquals(b[i], equalityAccuracy))
             {
                 return false;
             }
