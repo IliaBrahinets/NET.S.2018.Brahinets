@@ -30,6 +30,11 @@ public class Polynominal
         }
     }
 
+    /// <param name="coeffs">The coeffs of the created polynominal.</param>
+    /// <param name="coeffsOrder">An order of polynominals coeffs, can be ascending or decreasing of powers.</param>
+    /// <param name="accuracy">The accuracy used when polynominals are tested on equality.</param>
+    /// <exception cref="ArgumentNullException">Thrown when the coeffs array is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when accuracy is less than zero.</exception>
     public Polynominal(double[] coeffs, CoeffsOrder coeffsOrder = DefaultCoeffsOrder, double accuracy = DefaultAccuracy)
     {
         ConstructorDataValidation(coeffs, accuracy);
@@ -67,6 +72,7 @@ public class Polynominal
         Accuracy = accuracy;
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
     public static Polynominal Add(Polynominal left, Polynominal right)
     {
         OverloadedOperationValidation(left, right);
@@ -96,6 +102,7 @@ public class Polynominal
         return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Add(Polynominal left, double right)
     {
         OverloadedOperationValidation(left);
@@ -109,6 +116,7 @@ public class Polynominal
         return new Polynominal(newCoeffs, accuracy: left.Accuracy);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Add(double left, Polynominal right)
     {
         return Add(right, left);
@@ -129,6 +137,7 @@ public class Polynominal
         return Add(left, right);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
     public static Polynominal Substract(Polynominal left, Polynominal right)
     {
         OverloadedOperationValidation(left, right);
@@ -156,11 +165,13 @@ public class Polynominal
         return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Substract(Polynominal left, double right)
     {
         return Add(left, -right);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Substract(double left, Polynominal right)
     {
         return Add(-left, right);
@@ -181,6 +192,7 @@ public class Polynominal
         return Substract(left, right);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
     public static Polynominal Multiply(Polynominal left, Polynominal right)
     {
         OverloadedOperationValidation(left, right);
@@ -200,6 +212,7 @@ public class Polynominal
         return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Multiply(Polynominal left, double right)
     {
         OverloadedOperationValidation(left);
@@ -216,6 +229,7 @@ public class Polynominal
         return new Polynominal(newCoeffs, accuracy: left.Accuracy);
     }
 
+    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
     public static Polynominal Multiply(double left, Polynominal right)
     {
         return Multiply(right, left);
@@ -256,11 +270,18 @@ public class Polynominal
         return !(left == right);
     }
 
+    /// <summary>
+    /// Returns the coeffs of a polynominals are separated by " ".
+    /// </summary>
     public override string ToString()
     {
         return ToString(" ");
     }
 
+    /// <summary>
+    /// Returns the coeffs of a polynominals are separated by the given separator.
+    /// </summary>
+    /// <param name="separator"></param>
     public string ToString(string separator)
     {
         StringBuilder result = new StringBuilder();
@@ -296,6 +317,10 @@ public class Polynominal
         return IsEqual(this, other, null);
     }
 
+    /// <summary>
+    /// Test on equality two polinomials.
+    /// </summary>
+    /// <param name="accuracy">The maximum acceptable difference between the coeffs.</param>
     public bool Equals(Polynominal other, double accuracy)
     {
         if (Object.ReferenceEquals(other, null))
