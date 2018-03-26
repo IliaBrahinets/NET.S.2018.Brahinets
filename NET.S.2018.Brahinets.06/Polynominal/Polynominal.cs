@@ -165,13 +165,9 @@ public class Polynominal:IEnumerable<double>
     {
         StringBuilder result = new StringBuilder();
 
-        if(Degree == 0)
-        {
-            return $"{Coeffs[0]}";
-        }
-        result.Append(Coeffs[Degree + 1]);
+        result.Append(Coeffs[Degree]);
 
-        int remain = Degree;
+        int remain = Degree - 1;
 
         while(remain >= 0)
         {
@@ -262,7 +258,4 @@ public class Polynominal:IEnumerable<double>
             return i;
         }
     }
-
-
 }
-
