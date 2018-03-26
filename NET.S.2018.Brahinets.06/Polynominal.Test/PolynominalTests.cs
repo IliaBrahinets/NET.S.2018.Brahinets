@@ -15,10 +15,10 @@ public class PolynominalTests
         Polynominal a = new Polynominal(Coeffs);
         Polynominal b = new Polynominal(Coeffs.Reverse().ToArray(), Polynominal.CoeffsOrder.DecreasingOrder);
 
-        Assert.True(a.Equals(b));
+        Assert.True(a == b);
     }
 
-
+    
     public static IEnumerable<TestCaseData> AddMethodTestData
     {
         get
@@ -85,5 +85,47 @@ public class PolynominalTests
         return actual;
     }
 
+    public static IEnumerable<TestCaseData> MultiplyMethodOnDoubleTestData
+    {
+        get
+        {
+            yield return new TestCaseData(new Polynominal(new[] { 1d, 2, 3, 4 }), 2)
+                                 .Returns(new Polynominal(new[] { 2d, 4, 6, 8 }));
+
+            yield return new TestCaseData(new Polynominal(new[] { 0d, 0, 3.5, 4 }), 5)
+                                 .Returns(new Polynominal(new[] { 0d, 0, 17.5, 20 }));
+        }
+    }
+
+    [Test, TestCaseSource(nameof(MultiplyMethodOnDoubleTestData))]
+    public Polynominal MultiplyMethod(Polynominal a, double b)
+    {
+        Polynominal actual = a * b;
+
+        return actual;
+    }
+
+    public static IEnumerable<TestCaseData> EqualsTestData
+    {
+        get
+        {
+            yield return new TestCaseData(new Polynominal(new[] { 1.12d, 2.24, 3.78, 4.97 }),
+                                          new Polynominal(new[] { 1.16d, 2.22, 3.74, 4.95 }), 0.1d)
+                                 .Returns(true);
+            yield return new TestCaseData(new Polynominal(new[] { 1.12d, 2.24, 3.78, 4.97 }),
+                                          new Polynominal(new[] { 1.16d, 2.22, 3.74, 4.95 }), 0.01d)
+                                 .Returns(false);
+        }
+    }
+
+    [Test, TestCaseSource(nameof(EqualsTestData))]
+    public bool EqualsMethod(Polynominal a, Polynominal b, double accuracy)
+    {
+        bool actual = a.Equals(b, accuracy);
+
+        return actual;
+    }
+    
+    
 }
 

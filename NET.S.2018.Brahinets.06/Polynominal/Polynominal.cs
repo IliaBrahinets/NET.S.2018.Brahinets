@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Polynominal:IEnumerable<double>
+public class Polynominal
 {
-    public int Degree { get; }
-
     public const double DefaultAccuracy = 0.001;
-    public double Accuracy { get; }
+    public const CoeffsOrder DefaultCoeffsOrder = CoeffsOrder.AscendingOrder;
 
+    public int Degree { get; }
+    public double Accuracy { get; }
     public double this[int variableDegree]
     {
         get
@@ -30,19 +30,9 @@ public class Polynominal:IEnumerable<double>
         }
     }
 
-    public enum CoeffsOrder
-    {
-        AscendingOrder,
-        DecreasingOrder
-    }
-    public const CoeffsOrder DefaultCoeffsOrder = CoeffsOrder.AscendingOrder;
-
     public Polynominal(double[] coeffs, CoeffsOrder coeffsOrder = DefaultCoeffsOrder, double accuracy = DefaultAccuracy)
     {
-        if(coeffs == null)
-        {
-            throw new ArgumentNullException($"{nameof(coeffs)} can not be null");
-        }
+        ConstructorDataValidation(coeffs, accuracy);
 
         int firstNonZeroIndex = WithoutLeadZeroCoeffs(coeffs, coeffsOrder);
 
@@ -77,17 +67,19 @@ public class Polynominal:IEnumerable<double>
         Accuracy = accuracy;
     }
 
-    public static Polynominal Add(Polynominal a, Polynominal b)
+    public static Polynominal Add(Polynominal left, Polynominal right)
     {
+        OverloadedOperationValidation(left, right);
+
         double[] newCoeffs = null;
 
-        Polynominal more = a;
-        Polynominal less = b;
+        Polynominal more = left;
+        Polynominal less = right;
 
-        if (b.Degree > a.Degree)
+        if (right.Degree > left.Degree)
         {
-            more = b;
-            less = a;
+            more = right;
+            less = left;
         }
 
         newCoeffs = new double[more.Degree + 1];
@@ -99,61 +91,169 @@ public class Polynominal:IEnumerable<double>
             newCoeffs[i] += less.Coeffs[i];
         }
 
-        return new Polynominal(newCoeffs);
+        double newAccuracy = AccuracySelectStrategy(more.Accuracy, less.Accuracy);
+
+        return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
-
-    public static Polynominal operator+(Polynominal a, Polynominal b)
+    public static Polynominal Add(Polynominal left, double right)
     {
-        return Add(a, b);
+        OverloadedOperationValidation(left);
+
+        var newCoeffs = new double[left.Degree + 1];
+
+        left.Coeffs.CopyTo(newCoeffs, 0);
+
+        newCoeffs[0] += right;
+
+        return new Polynominal(newCoeffs, accuracy: left.Accuracy);
     }
 
-    public static Polynominal Substract(Polynominal a, Polynominal b)
+    public static Polynominal Add(double left, Polynominal right)
     {
+        return Add(right, left);
+    }
+
+    public static Polynominal operator+(Polynominal left, Polynominal right)
+    {
+        return Add(left, right);
+    }
+
+    public static Polynominal operator+(Polynominal left, double right)
+    {
+        return Add(left, right);
+    }
+
+    public static Polynominal operator+(double left, Polynominal right)
+    {
+        return Add(left, right);
+    }
+
+    public static Polynominal Substract(Polynominal left, Polynominal right)
+    {
+        OverloadedOperationValidation(left, right);
+
         double[] newCoeffs = null;
 
-        if (b.Degree > a.Degree)
+        if (right.Degree > left.Degree)
         {
-            newCoeffs = new double[b.Degree + 1];
+            newCoeffs = new double[right.Degree + 1];
         }
         else
         {
-            newCoeffs = new double[a.Degree + 1];
+            newCoeffs = new double[left.Degree + 1];
         }
 
-        a.Coeffs.CopyTo(newCoeffs, 0);
+        left.Coeffs.CopyTo(newCoeffs, 0);
 
-        for (int i = 0; i <= b.Degree; i++)
+        for (int i = 0; i <= right.Degree; i++)
         {
-            newCoeffs[i] -= b.Coeffs[i];
+            newCoeffs[i] -= right.Coeffs[i];
         }
 
-        return new Polynominal(newCoeffs);
+        double newAccuracy = AccuracySelectStrategy(left.Accuracy, right.Accuracy);
+
+        return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
-    public static Polynominal operator-(Polynominal a, Polynominal b)
+    public static Polynominal Substract(Polynominal left, double right)
     {
-        return Substract(a, b);
-    } 
+        return Add(left, -right);
+    }
 
-    public static Polynominal Multiply(Polynominal a, Polynominal b)
+    public static Polynominal Substract(double left, Polynominal right)
     {
-        double[] newCoeffs = new double[a.Degree + b.Degree + 1];
+        return Add(-left, right);
+    }
 
-        for (int i = 0; i <= a.Degree; i++)
+    public static Polynominal operator-(Polynominal left, Polynominal right)
+    {
+        return Substract(left, right);
+    }
+
+    public static Polynominal operator-(Polynominal left, double right)
+    {
+        return Substract(left, right);
+    }
+
+    public static Polynominal operator-(double left, Polynominal right)
+    {
+        return Substract(left, right);
+    }
+
+    public static Polynominal Multiply(Polynominal left, Polynominal right)
+    {
+        OverloadedOperationValidation(left, right);
+        
+        double[] newCoeffs = new double[left.Degree + right.Degree + 1];
+
+        for (int i = 0; i <= right.Degree; i++)
         {
-            for (int j = 0; j <= b.Degree; j++)
+            for (int j = 0; j <= left.Degree; j++)
             {
-                newCoeffs[i + j] += a.Coeffs[i] * b.Coeffs[j];
+                newCoeffs[i + j] += left.Coeffs[i] * right.Coeffs[j];
             }
         }
 
-        return new Polynominal(newCoeffs);
+        double newAccuracy = AccuracySelectStrategy(left.Accuracy, right.Accuracy);
+
+        return new Polynominal(newCoeffs, accuracy: newAccuracy);
     }
 
-    public static Polynominal operator*(Polynominal a, Polynominal b)
+    public static Polynominal Multiply(Polynominal left, double right)
     {
-        return Multiply(a, b);
+        OverloadedOperationValidation(left);
+
+        double[] newCoeffs = new double[left.Degree + 1];
+
+        left.Coeffs.CopyTo(newCoeffs, 0);
+
+        for (int i = 0; i <= left.Degree; i++)
+        {
+            newCoeffs[i] *= right;
+        }
+
+        return new Polynominal(newCoeffs, accuracy: left.Accuracy);
+    }
+
+    public static Polynominal Multiply(double left, Polynominal right)
+    {
+        return Multiply(right, left);
+    }
+
+    public static Polynominal operator*(Polynominal left, Polynominal right)
+    {
+        return Multiply(left, right);
+    }
+
+    public static Polynominal operator*(Polynominal left, double right)
+    {
+        return Multiply(left, right);
+    }
+
+    public static Polynominal operator*(double left, Polynominal right)
+    {
+        return Multiply(left, right);
+    }
+
+    public static bool operator==(Polynominal left, Polynominal right)
+    {
+        if (Object.ReferenceEquals(left, right))
+        {
+            return true;
+        }
+
+        if (Object.ReferenceEquals(left, null) || Object.ReferenceEquals(right, null))
+        {
+            return false;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator!=(Polynominal left, Polynominal right)
+    {
+        return !(left == right);
     }
 
     public override string ToString()
@@ -186,16 +286,35 @@ public class Polynominal:IEnumerable<double>
             return false;
         }
 
+        if (Object.ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
         Polynominal other = obj as Polynominal;
 
-        if(this.Degree != other.Degree)
+        double equalityAccuracy = AccuracySelectStrategy(this.Accuracy, other.Accuracy);
+
+        return Equals(other, equalityAccuracy);
+    }
+
+    public bool Equals(Polynominal other, double accuracy)
+    {
+        if (Object.ReferenceEquals(other, null))
         {
             return false;
         }
 
-        for(int i = 0; i <= this.Degree; i++)
+        if (Object.ReferenceEquals(other, this))
         {
-            if (!this.Coeffs[i].AccurateEquals(other.Coeffs[i], Accuracy))
+            return true;
+        }
+
+        int maxDegree = Math.Max(this.Degree, other.Degree);
+
+        for (int i = 0; i <= maxDegree; i++)
+        {
+            if (!this[i].AccurateEquals(other[i], accuracy))
             {
                 return false;
             }
@@ -209,18 +328,41 @@ public class Polynominal:IEnumerable<double>
         return base.GetHashCode();
     }
 
-    public IEnumerator<double> GetEnumerator()
-    {
-        for (int i = 0; i <= Degree; i++)
-            yield return Coeffs[i];
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return ((IEnumerable<double>)this).GetEnumerator();
-    }
-
     private double[] Coeffs { get; }
+
+    private void ConstructorDataValidation(double[] coeffs, double accuracy)
+    {
+        if (coeffs == null)
+        {
+            throw new ArgumentNullException($"{nameof(coeffs)} can not be null");
+        }
+
+        if (accuracy < 0)
+        {
+            throw new ArgumentOutOfRangeException($"{nameof(accuracy)} can't be < 0");
+        }
+    }
+
+    private static void OverloadedOperationValidation(Polynominal left, Polynominal right)
+    {
+        if(left == null || right == null)
+        {
+            throw new ArgumentNullException("Arguments can't be null");
+        }
+    }
+
+    private static void OverloadedOperationValidation(Polynominal polynominal)
+    {
+        if (polynominal == null)
+        {
+            throw new ArgumentNullException("Arguments can't be null");
+        }
+    }
+
+    private static double AccuracySelectStrategy(double first, double second)
+    {
+        return Math.Min(first, second);
+    }
 
     private int WithoutLeadZeroCoeffs(double[] coeffs, CoeffsOrder coeffsOrder)
     {
@@ -229,7 +371,7 @@ public class Polynominal:IEnumerable<double>
         {
             int i = coeffs.Length - 1;
 
-            while (i >= 0 && coeffs[i].AccurateEquals(0, Accuracy))
+            while (i >= 0 && coeffs[i] == 0)
             {
                 i--;
             }
@@ -245,7 +387,7 @@ public class Polynominal:IEnumerable<double>
         {
             int i = 0;
 
-            while (i < coeffs.Length && coeffs[i].AccurateEquals(0, Accuracy))
+            while (i < coeffs.Length && coeffs[i] == 0)
             {
                 i++;
             }
@@ -257,5 +399,11 @@ public class Polynominal:IEnumerable<double>
 
             return i;
         }
+    }
+
+    public enum CoeffsOrder
+    {
+        AscendingOrder,
+        DecreasingOrder
     }
 }
