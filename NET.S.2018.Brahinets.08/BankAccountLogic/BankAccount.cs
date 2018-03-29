@@ -99,9 +99,9 @@ namespace BankAccountLogic
 
             DebitsBonusPoints(amount);
 
-            if ((Decimal.MaxValue - Balance) < amount)
+            if (Balance < amount)
             {
-                throw new InvalidOperationException($"{Balance} is exceeded Decimal.MaxValue");
+                throw new InvalidOperationException($"new {Balance} is less than zero");
             }
 
             Balance -= amount;
