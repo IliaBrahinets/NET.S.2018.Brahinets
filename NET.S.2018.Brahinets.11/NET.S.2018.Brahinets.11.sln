@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksMediumFormatter", "Boo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksMediumFormatter.Tests", "BooksMediumFormatter.Tests\BooksMediumFormatter.Tests.csproj", "{C2452DC7-8411-4916-8F49-BE76DC05B459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{27D0433A-B716-4BC4-8D14-699D706A9CC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C2452DC7-8411-4916-8F49-BE76DC05B459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2452DC7-8411-4916-8F49-BE76DC05B459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2452DC7-8411-4916-8F49-BE76DC05B459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D0433A-B716-4BC4-8D14-699D706A9CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D0433A-B716-4BC4-8D14-699D706A9CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D0433A-B716-4BC4-8D14-699D706A9CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D0433A-B716-4BC4-8D14-699D706A9CC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
