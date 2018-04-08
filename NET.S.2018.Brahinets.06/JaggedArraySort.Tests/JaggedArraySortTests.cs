@@ -31,7 +31,9 @@ public class JaggedArraySortTests
         IComparer<int[]> comparer = new ByRowsMaxElemsComparer();
 
         JaggedArraySort.Sort(array, comparer);
-        
+
+        OutputToDebug(array);
+
         Assert.True(IsSorted(array, comparer));
     }
 
@@ -113,5 +115,28 @@ public class JaggedArraySortTests
         return true;
     }
     #endregion
+
+    private void OutputToDebug(int[][] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i] != null && array[i].Length != 0)
+            {
+                int length = array[i].Length;
+
+                int j;
+                for (j = 0; j < length - 1; j++)
+                {
+                    TestContext.Write(array[i][j].ToString() + ' ');
+                }
+
+                TestContext.WriteLine(array[i][j]);
+            }
+            else
+            {
+                TestContext.WriteLine("empty or null");
+            }
+        }
+    }
 }
 

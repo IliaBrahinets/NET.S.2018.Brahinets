@@ -4,21 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
-public class Polynominal
+public class Polynomial:IEquatable<Polynomial>,ICloneable
 {
-    public const double DefaultAccuracy = 0.001;
     public const CoeffsOrder DefaultCoeffsOrder = CoeffsOrder.AscendingOrder;
+    public const double DefaultAccuracy = 0.1;
 
     public int Degree { get; }
-    public double Accuracy { get; }
+    public static double Accuracy { get; }
     public double this[int variableDegree]
     {
         get
         {
-            if(variableDegree > Degree + 1)
+            if(variableDegree > Degree)
             {
-                return 0;
+                throw new ArgumentException($"{nameof(Degree)} is more than polynomials degree");
             }
 
             if(variableDegree < 0)
@@ -30,14 +31,12 @@ public class Polynominal
         }
     }
 
-    /// <param name="coeffs">The coeffs of the created polynominal.</param>
-    /// <param name="coeffsOrder">An order of polynominals coeffs, can be ascending or decreasing of powers.</param>
-    /// <param name="accuracy">The accuracy used when polynominals are tested on equality.</param>
+    /// <param name="coeffs">The coeffs of the created polynomial.</param>
+    /// <param name="coeffsOrder">An order of polynomials coeffs, can be ascending or decreasing of powers.</param>
     /// <exception cref="ArgumentNullException">Thrown when the coeffs array is null.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when accuracy is less than zero.</exception>
-    public Polynominal(double[] coeffs, CoeffsOrder coeffsOrder = DefaultCoeffsOrder, double accuracy = DefaultAccuracy)
+    public Polynomial(double[] coeffs, CoeffsOrder coeffsOrder = DefaultCoeffsOrder)
     {
-        ConstructorDataValidation(coeffs, accuracy);
+        ConstructorDataValidation(coeffs);
 
         int firstNonZeroIndex = WithoutLeadZeroCoeffs(coeffs, coeffsOrder);
 
@@ -68,19 +67,30 @@ public class Polynominal
         }
 
         Degree = Coeffs.Length - 1;
-
-        Accuracy = accuracy;
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
-    public static Polynominal Add(Polynominal left, Polynominal right)
+    static Polynomial()
+    {
+        try
+        {
+            string fileString = ConfigurationSettings.AppSettings["accuracy"];
+            Accuracy = double.Parse(fileString);
+        }
+        catch (Exception)
+        {
+            Accuracy = DefaultAccuracy;
+        }
+    }
+
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynomials is null.</exception>
+    public static Polynomial Add(Polynomial left, Polynomial right)
     {
         OverloadedOperationValidation(left, right);
 
         double[] newCoeffs = null;
 
-        Polynominal more = left;
-        Polynominal less = right;
+        Polynomial more = left;
+        Polynomial less = right;
 
         if (right.Degree > left.Degree)
         {
@@ -97,13 +107,11 @@ public class Polynominal
             newCoeffs[i] += less.Coeffs[i];
         }
 
-        double newAccuracy = AccuracySelectStrategy(more.Accuracy, less.Accuracy);
-
-        return new Polynominal(newCoeffs, accuracy: newAccuracy);
+        return new Polynomial(newCoeffs);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Add(Polynominal left, double right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Add(Polynomial left, double right)
     {
         OverloadedOperationValidation(left);
 
@@ -113,32 +121,32 @@ public class Polynominal
 
         newCoeffs[0] += right;
 
-        return new Polynominal(newCoeffs, accuracy: left.Accuracy);
+        return new Polynomial(newCoeffs);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Add(double left, Polynominal right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Add(double left, Polynomial right)
     {
         return Add(right, left);
     }
 
-    public static Polynominal operator+(Polynominal left, Polynominal right)
+    public static Polynomial operator+(Polynomial left, Polynomial right)
     {
         return Add(left, right);
     }
 
-    public static Polynominal operator+(Polynominal left, double right)
+    public static Polynomial operator+(Polynomial left, double right)
     {
         return Add(left, right);
     }
 
-    public static Polynominal operator+(double left, Polynominal right)
+    public static Polynomial operator+(double left, Polynomial right)
     {
         return Add(left, right);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
-    public static Polynominal Substract(Polynominal left, Polynominal right)
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynomials is null.</exception>
+    public static Polynomial Substract(Polynomial left, Polynomial right)
     {
         OverloadedOperationValidation(left, right);
 
@@ -160,40 +168,38 @@ public class Polynominal
             newCoeffs[i] -= right.Coeffs[i];
         }
 
-        double newAccuracy = AccuracySelectStrategy(left.Accuracy, right.Accuracy);
-
-        return new Polynominal(newCoeffs, accuracy: newAccuracy);
+        return new Polynomial(newCoeffs);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Substract(Polynominal left, double right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Substract(Polynomial left, double right)
     {
         return Add(left, -right);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Substract(double left, Polynominal right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Substract(double left, Polynomial right)
     {
         return Add(-left, right);
     }
 
-    public static Polynominal operator-(Polynominal left, Polynominal right)
+    public static Polynomial operator-(Polynomial left, Polynomial right)
     {
         return Substract(left, right);
     }
 
-    public static Polynominal operator-(Polynominal left, double right)
+    public static Polynomial operator-(Polynomial left, double right)
     {
         return Substract(left, right);
     }
 
-    public static Polynominal operator-(double left, Polynominal right)
+    public static Polynomial operator-(double left, Polynomial right)
     {
         return Substract(left, right);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynominals is null.</exception>
-    public static Polynominal Multiply(Polynominal left, Polynominal right)
+    /// <exception cref="ArgumentNullException">Thrown when both or one of the polynomials is null.</exception>
+    public static Polynomial Multiply(Polynomial left, Polynomial right)
     {
         OverloadedOperationValidation(left, right);
         
@@ -207,13 +213,11 @@ public class Polynominal
             }
         }
 
-        double newAccuracy = AccuracySelectStrategy(left.Accuracy, right.Accuracy);
-
-        return new Polynominal(newCoeffs, accuracy: newAccuracy);
+        return new Polynomial(newCoeffs);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Multiply(Polynominal left, double right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Multiply(Polynomial left, double right)
     {
         OverloadedOperationValidation(left);
 
@@ -226,31 +230,31 @@ public class Polynominal
             newCoeffs[i] *= right;
         }
 
-        return new Polynominal(newCoeffs, accuracy: left.Accuracy);
+        return new Polynomial(newCoeffs);
     }
 
-    /// <exception cref="ArgumentNullException">Thrown when the polynominal is null.</exception>
-    public static Polynominal Multiply(double left, Polynominal right)
+    /// <exception cref="ArgumentNullException">Thrown when the polynomial is null.</exception>
+    public static Polynomial Multiply(double left, Polynomial right)
     {
         return Multiply(right, left);
     }
 
-    public static Polynominal operator*(Polynominal left, Polynominal right)
+    public static Polynomial operator*(Polynomial left, Polynomial right)
     {
         return Multiply(left, right);
     }
 
-    public static Polynominal operator*(Polynominal left, double right)
+    public static Polynomial operator*(Polynomial left, double right)
     {
         return Multiply(left, right);
     }
 
-    public static Polynominal operator*(double left, Polynominal right)
+    public static Polynomial operator*(double left, Polynomial right)
     {
         return Multiply(left, right);
     }
 
-    public static bool operator==(Polynominal left, Polynominal right)
+    public static bool operator==(Polynomial left, Polynomial right)
     {
         if (Object.ReferenceEquals(left, right))
         {
@@ -262,16 +266,16 @@ public class Polynominal
             return false;
         }
 
-        return IsEqual(left, right, null);
+        return left.Equals(right);
     }
 
-    public static bool operator!=(Polynominal left, Polynominal right)
+    public static bool operator!=(Polynomial left, Polynomial right)
     {
         return !(left == right);
     }
 
     /// <summary>
-    /// Returns the coeffs of a polynominals are separated by " ".
+    /// Returns the coeffs of a polynomials are separated by " ".
     /// </summary>
     public override string ToString()
     {
@@ -279,7 +283,7 @@ public class Polynominal
     }
 
     /// <summary>
-    /// Returns the coeffs of a polynominals are separated by the given separator.
+    /// Returns the coeffs of a polynomials are separated by the given separator.
     /// </summary>
     /// <param name="separator"></param>
     public string ToString(string separator)
@@ -302,7 +306,7 @@ public class Polynominal
 
     public override bool Equals(object obj)
     {
-        if (!(obj is Polynominal))
+        if (obj.GetType() != typeof(Polynomial))
         {
             return false;
         }
@@ -312,16 +316,15 @@ public class Polynominal
             return true;
         }
 
-        Polynominal other = obj as Polynominal;
+        Polynomial other = obj as Polynomial;
 
-        return IsEqual(this, other, null);
+        return Equals(other);
     }
 
     /// <summary>
     /// Test on equality two polinomials.
     /// </summary>
-    /// <param name="accuracy">The maximum acceptable difference between the coeffs.</param>
-    public bool Equals(Polynominal other, double accuracy)
+    public bool Equals(Polynomial other)
     {
         if (Object.ReferenceEquals(other, null))
         {
@@ -333,28 +336,14 @@ public class Polynominal
             return true;
         }
 
-        return IsEqual(this, other, accuracy);
-        
-    }
-
-    private static bool IsEqual(Polynominal a, Polynominal b, double? accuracy)
-    {
-        double equalityAccuracy;
-
-        if (accuracy == null)
+        if(this.Degree != other.Degree)
         {
-            equalityAccuracy = AccuracySelectStrategy(a.Accuracy, b.Accuracy);
-        }
-        else
-        {
-            equalityAccuracy = (double)accuracy;
+            return false;
         }
 
-        int maxDegree = Math.Max(a.Degree, b.Degree);
-
-        for (int i = 0; i <= maxDegree; i++)
+        for (int i = 0; i <= Degree; i++)
         {
-            if (!a[i].AccurateEquals(b[i], equalityAccuracy))
+            if (!Coeffs[i].AccurateEquals(other.Coeffs[i], Accuracy))
             {
                 return false;
             }
@@ -370,20 +359,15 @@ public class Polynominal
 
     private double[] Coeffs { get; }
 
-    private void ConstructorDataValidation(double[] coeffs, double accuracy)
+    private void ConstructorDataValidation(double[] coeffs)
     {
         if (coeffs == null)
         {
             throw new ArgumentNullException($"{nameof(coeffs)} can not be null");
         }
-
-        if (accuracy < 0)
-        {
-            throw new ArgumentOutOfRangeException($"{nameof(accuracy)} can't be < 0");
-        }
     }
 
-    private static void OverloadedOperationValidation(Polynominal left, Polynominal right)
+    private static void OverloadedOperationValidation(Polynomial left, Polynomial right)
     {
         if(left == null || right == null)
         {
@@ -391,17 +375,12 @@ public class Polynominal
         }
     }
 
-    private static void OverloadedOperationValidation(Polynominal polynominal)
+    private static void OverloadedOperationValidation(Polynomial polynomial)
     {
-        if (polynominal == null)
+        if (polynomial == null)
         {
             throw new ArgumentNullException("Arguments can't be null");
         }
-    }
-
-    private static double AccuracySelectStrategy(double first, double second)
-    {
-        return Math.Min(first, second);
     }
 
     private int WithoutLeadZeroCoeffs(double[] coeffs, CoeffsOrder coeffsOrder)
@@ -411,7 +390,7 @@ public class Polynominal
         {
             int i = coeffs.Length - 1;
 
-            while (i >= 0 && coeffs[i] == 0)
+            while (i >= 0 && coeffs[i].AccurateEquals(0,Accuracy))
             {
                 i--;
             }
@@ -427,7 +406,7 @@ public class Polynominal
         {
             int i = 0;
 
-            while (i < coeffs.Length && coeffs[i] == 0)
+            while (i < coeffs.Length && coeffs[i].AccurateEquals(0,Accuracy))
             {
                 i++;
             }
@@ -439,6 +418,11 @@ public class Polynominal
 
             return i;
         }
+    }
+
+    public object Clone()
+    {
+        return new Polynomial(Coeffs);
     }
 
     public enum CoeffsOrder

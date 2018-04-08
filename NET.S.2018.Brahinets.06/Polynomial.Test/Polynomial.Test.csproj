@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PolynominalTests.cs" />
+    <Compile Include="PolynomialTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,9 +55,9 @@
       <Project>{99c18169-8fba-4750-b8d2-0c270770f31f}</Project>
       <Name>DoubleEqualityExtension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Polynominal\Polynominal.csproj">
+    <ProjectReference Include="..\Polynomial\Polynomial.csproj">
       <Project>{a8b4f2bd-de5f-438c-928c-82da3f52074e}</Project>
-      <Name>Polynominal</Name>
+      <Name>Polynomial</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

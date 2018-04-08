@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polynominal", "Polynominal\Polynominal.csproj", "{A8B4F2BD-DE5F-438C-928C-82DA3F52074E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polynomial", "Polynomial\Polynomial.csproj", "{A8B4F2BD-DE5F-438C-928C-82DA3F52074E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polynominal.Test", "Polynominal.Test\Polynominal.Test.csproj", "{54A03973-A445-45F2-886A-73460F5D4A45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polynomial.Test", "Polynomial.Test\Polynomial.Test.csproj", "{54A03973-A445-45F2-886A-73460F5D4A45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleEqualityExtension", "DoubleEqualityExtension\DoubleEqualityExtension.csproj", "{99C18169-8FBA-4750-B8D2-0C270770F31F}"
 EndProject
