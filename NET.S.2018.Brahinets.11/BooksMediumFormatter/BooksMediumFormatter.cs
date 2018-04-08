@@ -33,7 +33,9 @@ public class BooksMediumFormatter : IFormatProvider, ICustomFormatter
         Book book = arg as Book;
 
         if (String.IsNullOrEmpty(format))
+        {
             return book.ToString();
+        }
 
         format = format.ToUpper();
 

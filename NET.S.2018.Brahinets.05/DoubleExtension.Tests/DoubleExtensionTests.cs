@@ -21,7 +21,7 @@ public class DoubleExtensionTests
     [TestCase(0.0, ExpectedResult = "0000000000000000000000000000000000000000000000000000000000000000")]
     public string BitsRepresentationAsStringMethod(double value)
     {
-        return value.BitsRepresentationAsStringV2();
+        return value.BitsRepresentationAsStringV3();
     }
 
 

@@ -44,7 +44,8 @@ public class MathExtension
     /// <exception cref="ArgumentException">Thrown when gcd(0, int.MinValue) or gcd(int.MinValue,int.MinValue) is calculated, because the answer is -int.MinValue and -int.MinValue = int.MaxValue + 1.</exception>
     public static int GcdByEuclid(params int[] numbers)
     {
-        return GcdOfMany(numbers, (a, b) => GcdByEuclid(a, b));
+        var gcdSolver = new GcdSolverDelegate(GcdByEuclid);
+        return GcdOfMany(numbers, gcdSolver);
     }
 
     /// <summary>
@@ -72,7 +73,8 @@ public class MathExtension
     /// <exception cref="ArgumentException">Thrown when gcd(0, int.MinValue) or gcd(int.MinValue,int.MinValue) is calculated, because the answer is -int.MinValue and -int.MinValue = int.MaxValue + 1.</exception>
     public static int GcdByStein(params int[] numbers)
     {
-        return GcdOfMany(numbers, (a, b) => GcdByStein(a, b));
+        var gcdSolver = new GcdSolverDelegate(GcdByStein);
+        return GcdOfMany(numbers, gcdSolver);
     }
 
     private static int GcdBySteinRecursive(int a, int b)
@@ -122,7 +124,7 @@ public class MathExtension
         return GcdByStein((b - a) >> 1, a);
     }
 
-    private static int GcdOfMany(int[] numbers, Func<int, int, int> gcdSolver)
+    private static int GcdOfMany(int[] numbers, GcdSolverDelegate gcdSolver)
     {
         int gcd = numbers[0];
 

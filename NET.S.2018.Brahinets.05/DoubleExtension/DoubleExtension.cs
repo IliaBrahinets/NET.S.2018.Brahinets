@@ -13,33 +13,7 @@ public static class DoubleExtension
     {
         long toLong = DoubleToLongBits(value);
 
-        return LongToBitsString(toLong);
-    }
-
-    private static string LongToBitsString(long value)
-    {
-        const int bitsLength = 64;
-
-        StringBuilder answer = new StringBuilder();
-
-        long mask = 1L << (bitsLength - 1);
-
-        for (long i = 1; i <= bitsLength; i++)
-        {
-            if ((value & mask) != 0)
-            {
-                answer.Append('1');
-            }
-            else
-            {
-                answer.Append('0');
-            }
-
-            value = value << 1;
-
-        }
-
-        return answer.ToString();
+        return toLong.LongToBitsString();
     }
 
     private static unsafe long DoubleToLongBits(double d)

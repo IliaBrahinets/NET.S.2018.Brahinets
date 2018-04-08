@@ -43,7 +43,14 @@
   <ItemGroup>
     <Compile Include="DoubleExtensionV2.cs" />
     <Compile Include="DoubleExtension.cs" />
+    <Compile Include="DoubleExtensionV3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LongExtension\LongExtension.csproj">
+      <Project>{608675fe-3ce2-437c-88e3-791685a19400}</Project>
+      <Name>LongExtension</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class Book : IEquatable<Book>, IComparable<Book>, IFormattable
+    public class Book : IEquatable<Book>, IComparable<Book>, IComparable, IFormattable
     {
         public string ISBN { get; private set; }
 
@@ -134,6 +134,11 @@ namespace Logic
 
         public int CompareTo(Book other)
         {
+            if(other == null)
+            {
+                return 1;
+            }
+
             return (int)(Price - other.Price);
         }
 
@@ -228,6 +233,21 @@ namespace Logic
 
             return result.ToString();
 
+        }
+
+        public int CompareTo(object obj)
+        {
+            if(obj == null)
+            {
+                return 1;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                throw new ArgumentException($"{nameof(obj)}, type is not a {nameof(Book)}");
+            }
+
+            return CompareTo((Book)obj);
         }
     }
 }
