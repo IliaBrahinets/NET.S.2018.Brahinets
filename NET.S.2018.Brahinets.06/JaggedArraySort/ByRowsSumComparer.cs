@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 public class ByRowsSumComparer : IComparer<int[]>
 {
+    /// <summary>
+    /// Represent comparing two one dimensional arrays.
+    /// As a key of comparing the sum of elements is used.  
+    /// null is less than non-null.
+    /// </summary>
+    /// <returns>key(x) > key(y) -> more than zero
+    ///          key(x) < key(y) -> less than zero
+    ///          key(x) = key(y) -> zero
+    ///          ***Ascending order***
+    /// </returns>
     public int Compare(int[] x, int[] y)
     {
         if (x == y)

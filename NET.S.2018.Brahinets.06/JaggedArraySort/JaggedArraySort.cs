@@ -10,7 +10,7 @@ public class JaggedArraySort
     /// <summary>
     /// Sorting the array by bubble sort.
     /// </summary>
-    /// <param name="comparer">Determines a comparer using when sorting.</param>
+    /// <param name="comparer">Determines a comparer is used when sorting.</param>
     /// <exception cref="ArgumentNullException">Thrown when array is null.</exception>
     public static void Sort(int[][] array, IComparer<int[]> comparer)
     {

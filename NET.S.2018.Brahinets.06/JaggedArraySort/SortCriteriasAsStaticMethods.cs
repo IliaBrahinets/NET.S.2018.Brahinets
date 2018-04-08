@@ -12,9 +12,10 @@ public class SortCriteriasAsStaticMethods
     /// As a key of comparing the sum of elements is used.  
     /// null is less than non-null.
     /// </summary>
-    /// <returns>x > y -> more than zero
-    ///          x < y -> less than zero
-    ///          x = y -> zero
+    /// <returns>key(x) > key(y) -> more than zero
+    ///          key(x) < key(y) -> less than zero
+    ///          key(x) = key(y) -> zero
+    ///          ***Ascending order***
     /// </returns>
     public static int ByRowsSum(int[] x, int[] y)
     {
@@ -26,9 +27,10 @@ public class SortCriteriasAsStaticMethods
     /// As a key of comparing the max elements of arrays is used.  
     /// null is less than non-null.
     /// </summary>
-    /// <returns>x > y -> more than zero
-    ///          x < y -> less than zero
-    ///          x = y -> zero
+    /// <returns>key(x) > key(y) -> more than zero
+    ///          key(x) < key(y) -> less than zero
+    ///          key(x) = key(y) -> zero
+    ///          ***Ascending order***
     /// </returns>
     public static int ByRowsMax(int[] x, int[] y)
     {
@@ -40,9 +42,10 @@ public class SortCriteriasAsStaticMethods
     /// As a key of comparing the min elements of arrays is used.  
     /// null is less than non-null.
     /// </summary>
-    /// <returns>x > y -> more than zero
-    ///          x < y -> less than zero
-    ///          x = y -> zero
+    /// <returns>key(x) > key(y) -> more than zero
+    ///          key(x) < key(y) -> less than zero
+    ///          key(x) = key(y) -> zero
+    ///          ***Ascending order***
     /// </returns>
     public static int ByRowsMin(int[] x, int[] y)
     {
