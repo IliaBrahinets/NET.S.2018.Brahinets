@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByRowsMaxElemsComparer.cs" />
+    <Compile Include="ByRowsMinElemsComparer.cs" />
+    <Compile Include="ByRowsSumComparer.cs" />
     <Compile Include="JaggedArraySort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortCriteriasAsStaticMethods.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
