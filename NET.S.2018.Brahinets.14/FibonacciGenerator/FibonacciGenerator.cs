@@ -15,7 +15,7 @@ public class FibonacciGenerator
     /// <exception cref="ArgumentException">Thrown when length is less than zero.</exception>
     /// <exception cref="OverflowException">Thrown when some elem of series exceeded long.MaxValue.</exception>
     /// <returns></returns>
-    public long[] GetSeries(int n, bool isFirstZero = false)
+    public static long[] GetSeries(int n, bool isFirstZero = false)
     {
         DataValidation(n);
 
@@ -51,7 +51,7 @@ public class FibonacciGenerator
 
     }
 
-    private Tuple<byte, byte> HandleSeedValues(bool isFirstZero)
+    private static Tuple<byte, byte> HandleSeedValues(bool isFirstZero)
     {
         if (isFirstZero)
         {
@@ -62,11 +62,11 @@ public class FibonacciGenerator
         
     }
 
-    private void DataValidation(int n)
+    private static void DataValidation(int n)
     {
         if (n < 0)
         {
-            throw new ArgumentException($"{nameof(n)} can't be < 0");
+            throw new ArgumentOutOfRangeException($"{nameof(n)} can't be < 0");
         }
     }
 }

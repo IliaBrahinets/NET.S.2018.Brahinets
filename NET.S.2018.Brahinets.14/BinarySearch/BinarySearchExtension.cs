@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 public static class BinarySearchExtension
 {
     /// <summary>
-    /// Performs searching the item in the array by the binary search algorithm.
+    /// Performs searching an item in a sorted array by the binary search algorithm.
     /// As a comparer the default comparer is used.
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item)
     {
         DataValidation(array, null, null, null);
+
+        if(array.Count == 0)
+        {
+            return -1;
+        }
 
         IComparer<T> comparer = Comparer<T>.Default;
 
@@ -24,13 +31,20 @@ public static class BinarySearchExtension
     }
 
     /// <summary>
-    /// Performs searching the item in the array by the binary search algorithm.
+    /// Performs searching an item in a sorted array by the binary search algorithm.
     /// As a comparer the given comparer is used.
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the given comparer is null and the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item, IComparer<T> comparer)
     {
         DataValidation(array, null, null, comparer);
+
+        if (array.Count == 0)
+        {
+            return -1;
+        }
 
         comparer = comparer ?? Comparer<T>.Default;
 
@@ -41,13 +55,21 @@ public static class BinarySearchExtension
     }
 
     /// <summary>
-    /// Performs searching the item in the array from the left to the right index by the binary search algorithm.
+    /// Performs searching an item in a sorted array from the left to the right index by the binary search algorithm.
     /// As a comparer the given comparer is used.
     /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the left and right bounds are not valid.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the given comparer is null and the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item, int left, int right, IComparer<T> comparer)
     {
         DataValidation(array, left, right, comparer);
+
+        if (array.Count == 0)
+        {
+            return -1;
+        }
 
         comparer = comparer ?? Comparer<T>.Default;
 
