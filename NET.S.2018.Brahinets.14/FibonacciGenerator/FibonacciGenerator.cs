@@ -11,7 +11,7 @@ public class FibonacciGenerator
     /// As the first and the second (0,1) or (1,1) is used, depend on the isFirstZero value.
     /// By default isFirstZero = false.
     /// </summary>
-    /// <param name="isFirstZero">the first and the second when true are (0,1), when false are (1,1).</param>
+    /// <param name="isFirstZero">the first and the second elems of the sequence when true are (0,1), when false are (1,1).</param>
     /// <exception cref="ArgumentException">Thrown when length is less than zero.</exception>
     /// <exception cref="OverflowException">Thrown when some elem of series exceeded long.MaxValue.</exception>
     /// <returns></returns>
