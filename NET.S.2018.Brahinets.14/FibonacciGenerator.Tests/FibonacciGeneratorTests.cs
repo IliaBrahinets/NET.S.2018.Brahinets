@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,23 @@ using NUnit.Framework;
 [TestFixture]
 public class FibonacciGeneratorTests
 {
-    [Test]
-    [TestCase(2, ExpectedResult = new long[] { 1, 1 })]
-    [TestCase(4, ExpectedResult = new long[] { 1, 1, 2, 3 })]
-    [TestCase(8, ExpectedResult = new long[] { 1, 1, 2, 3, 5, 8, 13, 21 })]
-    public long[] GetSeriesMethod(int n)
+
+    private static IEnumerable<TestCaseData> TestData
     {
-        return FibonacciGenerator.GetSeries(n);
+        get
+        {
+            yield return new TestCaseData(2).Returns(new BigInteger[] { 1, 1 });
+            yield return new TestCaseData(4).Returns(new BigInteger[] { 1, 1, 2, 3 });
+            yield return new TestCaseData(8).Returns(new BigInteger[] { 1, 1, 2, 3, 5, 8, 13, 21 });
+        }
+                
     }
 
     [Test]
-    public void GetSeriesMethod_TooMuchElem_OverflowException()
+    [TestCaseSource(nameof(TestData))]
+    public BigInteger[] GetSeriesMethod(int n)
     {
-        int n = 10000;
-
-        Assert.Throws<OverflowException>(() => FibonacciGenerator.GetSeries(n));
+        return FibonacciGenerator.GetSeries(n).ToArray();
     }
 
     [Test]
@@ -30,7 +33,7 @@ public class FibonacciGeneratorTests
     {
         int n = -1;
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => FibonacciGenerator.GetSeries(n));
+        Assert.Throws<ArgumentOutOfRangeException>(() => FibonacciGenerator.GetSeries(n).ToArray());
     }
 }
 

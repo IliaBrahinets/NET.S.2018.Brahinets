@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,43 +13,42 @@ public class FibonacciGenerator
     /// By default isFirstZero = false.
     /// </summary>
     /// <param name="isFirstZero">the first and the second elems of the sequence when true are (0,1), when false are (1,1).</param>
-    /// <exception cref="ArgumentException">Thrown when length is less than zero.</exception>
-    /// <exception cref="OverflowException">Thrown when some elem of series exceeded long.MaxValue.</exception>
+    /// <exception cref="ArgumentException">Thrown when n is less than zero.</exception>
     /// <returns></returns>
-    public static long[] GetSeries(int n, bool isFirstZero = false)
+    public static IEnumerable<BigInteger> GetSeries(int n, bool isFirstZero = false)
     {
         DataValidation(n);
 
         Tuple<byte, byte> seedValues = HandleSeedValues(isFirstZero);
-
-        long[] series = new long[n];
-
+       
         if(n == 0)
         {
-            return series;
+            yield break;
         }
 
-        //F1
-        series[0] = seedValues.Item1;
+        BigInteger fn_2 = seedValues.Item1;
+        yield return fn_2;
 
-        if(n == 1)
+        //Fn-2
+        if (n == 1)
         {
-            return series;
+            yield break;
         }
 
-        //F2
-        series[1] = seedValues.Item2;
+        //Fn-1
+        BigInteger fn_1 = seedValues.Item2;
+        yield return fn_1;
 
-        for(int i = 2; i < n; i++)
+        BigInteger curr;
+
+        for (int i = 2; i < n; i++)
         {
-            checked
-            {
-                series[i] = series[i - 1] + series[i - 2];
-            }
+            curr = fn_1 + fn_2;
+            yield return curr;
+
+            fn_2 = fn_1;
+            fn_1 = curr;
         }
-
-        return series;
-
     }
 
     private static Tuple<byte, byte> HandleSeedValues(bool isFirstZero)

@@ -11,7 +11,8 @@ public static class BinarySearchExtension
     /// As a comparer the default comparer is used.
     /// </summary>
     /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the T does't implement both IComparable and IComparable<typeparamref name="T"/> 
+    ///                                             or an error was occured during a comparasion.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item)
     {
@@ -35,7 +36,7 @@ public static class BinarySearchExtension
     /// As a comparer the given comparer is used.
     /// </summary>
     /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the given comparer is null and the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error was occured during a comparasion.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item, IComparer<T> comparer)
     {
@@ -46,7 +47,29 @@ public static class BinarySearchExtension
             return -1;
         }
 
-        comparer = comparer ?? Comparer<T>.Default;
+        int left = 0;
+        int right = array.Count - 1;
+
+        return BinarySearch(array, left, right, item, comparer);
+    }
+
+    /// <summary>
+    /// Performs searching an item in a sorted array by the binary search algorithm.
+    /// As a comparer the given comparison is used.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error was occured during a comparasion.</exception>
+    /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
+    public static int BinarySearch<T>(this IList<T> array, T item, Comparison<T> comparison)
+    {
+        IComparer<T> comparer = Comparer<T>.Create(comparison);
+
+        DataValidation(array, null, null, comparer);
+
+        if (array.Count == 0)
+        {
+            return -1;
+        }
 
         int left = 0;
         int right = array.Count - 1;
@@ -60,7 +83,31 @@ public static class BinarySearchExtension
     /// </summary>
     /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
     /// <exception cref="ArgumentException">Thrown when the left and right bounds are not valid.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the given comparer is null and the T does't implement both IComparable and IComparable<typeparamref name="T"/>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the T does't implement both IComparable and IComparable<typeparamref name="T"/> 
+    ///                                             or an error was occured during a comparasion.</exception>
+    /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
+    public static int BinarySearch<T>(this IList<T> array, T item, int left, int right)
+    {
+        DataValidation(array, left, right, null);
+
+        if (array.Count == 0)
+        {
+            return -1;
+        }
+
+        IComparer<T> comparer = Comparer<T>.Default;
+
+        return BinarySearch(array, left, right, item, comparer);
+
+    }
+
+    /// <summary>
+    /// Performs searching an item in a sorted array from the left to the right index by the binary search algorithm.
+    /// As a comparer the given comparer is used.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the left and right bounds are not valid.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error was occured during a comparasion.</exception>
     /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
     public static int BinarySearch<T>(this IList<T> array, T item, int left, int right, IComparer<T> comparer)
     {
@@ -71,7 +118,28 @@ public static class BinarySearchExtension
             return -1;
         }
 
-        comparer = comparer ?? Comparer<T>.Default;
+        return BinarySearch(array, left, right, item, comparer);
+
+    }
+
+    /// <summary>
+    /// Performs searching an item in a sorted array from the left to the right index by the binary search algorithm.
+    /// As a comparer the given comparer is used.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the left and right bounds are not valid.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error was occured during a comparasion.</exception>
+    /// <returns>Return index of the item or -1 if the can't find the given item.</returns>
+    public static int BinarySearch<T>(this IList<T> array, T item, int left, int right, Comparison<T> comparison)
+    {
+        IComparer<T> comparer = Comparer<T>.Create(comparison);
+
+        DataValidation(array, left, right, comparer);
+
+        if (array.Count == 0)
+        {
+            return -1;
+        }
 
         return BinarySearch(array, left, right, item, comparer);
 
@@ -83,9 +151,20 @@ public static class BinarySearchExtension
 
         while (right - left > 1)
         {
-            mid = (left + right) >> 1; 
+            mid = (left + right) >> 1;
 
-            if (comparer.Compare(array[mid], item) > 0)
+            int compRes;
+
+            try
+            {
+                compRes = comparer.Compare(array[mid], item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("an error was occured during a comparasion");
+            }
+
+            if (compRes > 0)
             {
                 right = mid - 1;
             }

@@ -24,7 +24,7 @@ public class BinarySearchExtensionTests
     [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 9, 10 }, 3, 0, 5, ExpectedResult = 2)]
     public int BinarySearchMethod(int[] array, int item, int left, int right)
     {
-        return array.BinarySearch(item, left, right, null);
+        return array.BinarySearch(item, left, right);
     }
 
     private class WithoutIComparable {}
@@ -35,7 +35,7 @@ public class BinarySearchExtensionTests
     {
         WithoutIComparable[] array = new WithoutIComparable[1];
 
-        Assert.Throws<InvalidOperationException>(() => array.BinarySearch(new WithoutIComparable(), null));
+        Assert.Throws<InvalidOperationException>(() => array.BinarySearch(new WithoutIComparable()));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class BinarySearchExtensionTests
         int left = -1;
         int right = 0;
 
-        Assert.Throws<ArgumentException>(() => array.BinarySearch(1, left, right, null));
+        Assert.Throws<ArgumentException>(() => array.BinarySearch(1, left, right));
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class BinarySearchExtensionTests
     {
         int[] array = null;
 
-        Assert.Throws<ArgumentNullException>(() => array.BinarySearch(1, 0, 0, null));
+        Assert.Throws<ArgumentNullException>(() => array.BinarySearch(1, 0, 0));
     }
 
 }
