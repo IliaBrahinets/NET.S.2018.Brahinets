@@ -146,6 +146,56 @@ public class BinarySearchTree<T>:ICollection<T>
         }
     }
 
+    public IEnumerator<T> GetPostfixEnumerator()
+    {
+        if (head == null)
+        {
+            return EmptyEnumerator();
+        }
+
+        return PostfixTraverse(head);
+    }
+
+    private IEnumerator<T> PostfixTraverse(Node<T> node)
+    {
+        if (node.Left != null)
+        {
+            InfixTraverse(node.Left);
+        }
+
+        if (node.Right != null)
+        {
+            InfixTraverse(node.Right);
+        }
+
+        yield return node.Value;
+    }
+
+    public IEnumerator<T> GetPrefixEnumerator()
+    {
+        if (head == null)
+        {
+            return EmptyEnumerator();
+        }
+
+        return PrefixTraverse(head);
+    }
+
+    private IEnumerator<T> PrefixTraverse(Node<T> node)
+    {
+        yield return node.Value;
+
+        if (node.Left != null)
+        {
+            InfixTraverse(node.Left);
+        }
+
+        if (node.Right != null)
+        {
+            InfixTraverse(node.Right);
+        }
+    }
+
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
         throw new NotImplementedException();
