@@ -123,12 +123,37 @@ public class BinarySearchTree<T>:ICollection<T>
 
     public IEnumerator<T> GetInfixEnumerator()
     {
+        if (head == null)
+        {
+            return EmptyEnumerator();
+        }
 
+        return InfixTraverse(head);
+    }
+
+    private IEnumerator<T> InfixTraverse(Node<T> node)
+    {
+        if(node.Left != null)
+        {
+            InfixTraverse(node.Left);
+        }
+
+        yield return node.Value;
+
+        if (node.Right != null)
+        {
+            InfixTraverse(node.Right);
+        }
     }
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
         throw new NotImplementedException();
+    }
+
+    private IEnumerator<T> EmptyEnumerator()
+    {
+        yield break;
     }
 
     public void CopyTo(T[] array, int arrayIndex)
