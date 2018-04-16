@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// BinarySearchTree where key(left) is less than key(Node) and key(right) is more than key(Node).
 /// Don't store items with the same keys.
 /// </summary>
-public class BinarySearchTree<T>:ICollection<T>
+public class BinarySearchTree<T> : ICollection<T>
 {
     private Node<T> head;
     private IComparer<T> comparer;
@@ -121,17 +121,17 @@ public class BinarySearchTree<T>:ICollection<T>
         return false;
     }
 
-    public IEnumerator<T> GetInfixEnumerator()
+    public IEnumerable<T> GetInfixEnumerable()
     {
         if (head == null)
         {
-            return EmptyEnumerator();
+            return EmptyEnumerable();
         }
 
         return InfixTraverse(head);
     }
 
-    private IEnumerator<T> InfixTraverse(Node<T> node)
+    private IEnumerable<T> InfixTraverse(Node<T> node)
     {
         if(node.Left != null)
         {
@@ -146,17 +146,17 @@ public class BinarySearchTree<T>:ICollection<T>
         }
     }
 
-    public IEnumerator<T> GetPostfixEnumerator()
+    public IEnumerable<T> GetPostfixEnumerable()
     {
         if (head == null)
         {
-            return EmptyEnumerator();
+            return EmptyEnumerable();
         }
 
         return PostfixTraverse(head);
     }
 
-    private IEnumerator<T> PostfixTraverse(Node<T> node)
+    private IEnumerable<T> PostfixTraverse(Node<T> node)
     {
         if (node.Left != null)
         {
@@ -171,17 +171,17 @@ public class BinarySearchTree<T>:ICollection<T>
         yield return node.Value;
     }
 
-    public IEnumerator<T> GetPrefixEnumerator()
+    public IEnumerable<T> GetPrefixEnumerable()
     {
         if (head == null)
         {
-            return EmptyEnumerator();
+            return EmptyEnumerable();
         }
 
         return PrefixTraverse(head);
     }
 
-    private IEnumerator<T> PrefixTraverse(Node<T> node)
+    private IEnumerable<T> PrefixTraverse(Node<T> node)
     {
         yield return node.Value;
 
@@ -198,10 +198,15 @@ public class BinarySearchTree<T>:ICollection<T>
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
-        throw new NotImplementedException();
+        return GetInfixEnumerable().GetEnumerator();
     }
 
-    private IEnumerator<T> EmptyEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IEnumerable<T>)this).GetEnumerator();
+    }
+
+    private IEnumerable<T> EmptyEnumerable()
     {
         yield break;
     }
@@ -321,11 +326,6 @@ public class BinarySearchTree<T>:ICollection<T>
         }
 
         return null;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        throw new NotImplementedException();
     }
 
     private int CleverComarasion(T item1, T item2)
