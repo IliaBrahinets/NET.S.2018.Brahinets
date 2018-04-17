@@ -189,6 +189,11 @@ public class BinarySearchTree<T> : ICollection<T>
         return true;
     }
 
+    public IEnumerator<T> GetEnumerator()
+    {
+        return GetInfixEnumerable().GetEnumerator();
+    }
+
     public IEnumerable<T> GetInfixEnumerable()
     {
         if (head == null)
