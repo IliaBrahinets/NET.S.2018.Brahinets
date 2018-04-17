@@ -18,7 +18,7 @@ class BinarySearchTreeTests
     {
         BinarySearchTree<int> bst = new BinarySearchTree<int>();
 
-        bst.Add(5); bst.Add(10); bst.Add(20);
+        bst.Add(10); bst.Add(5); bst.Add(20);
 
         TestEnumerable(bst.GetInfixEnumerable());
         TestEnumerable(bst.GetPostfixEnumerable());

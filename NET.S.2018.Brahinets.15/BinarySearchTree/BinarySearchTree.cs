@@ -11,13 +11,15 @@ using System.Threading.Tasks;
 /// </summary>
 public class BinarySearchTree<T> : ICollection<T>
 {
+    #region ConstantFields
+    #endregion
+
+    #region Fields
     private Node<T> head;
     private IComparer<T> comparer;
+    #endregion
 
-    public int Count { get; set; }
-
-    public bool IsReadOnly => false;
-
+    #region Constructors
     public BinarySearchTree()
     {
         HandleComparer(null);
@@ -46,7 +48,16 @@ public class BinarySearchTree<T> : ICollection<T>
             Add(item);
         }
     }
+    #endregion
 
+    #region Properties
+    public int Count { get; set; }
+    public bool IsReadOnly => false;
+    #endregion
+
+    #region Methods
+
+    #region Public
     public void Add(T item)
     {
         Count++;
@@ -61,7 +72,7 @@ public class BinarySearchTree<T> : ICollection<T>
 
         while (true)
         {
-            int c = CleverComarasion(item, node.Value);
+            int c = CleverComparasion(item, node.Value);
 
             if (c == 0)
             {
@@ -121,96 +132,6 @@ public class BinarySearchTree<T> : ICollection<T>
         return false;
     }
 
-    public IEnumerable<T> GetInfixEnumerable()
-    {
-        if (head == null)
-        {
-            return EmptyEnumerable();
-        }
-
-        return InfixTraverse(head);
-    }
-
-    private IEnumerable<T> InfixTraverse(Node<T> node)
-    {
-        if(node.Left != null)
-        {
-            InfixTraverse(node.Left);
-        }
-
-        yield return node.Value;
-
-        if (node.Right != null)
-        {
-            InfixTraverse(node.Right);
-        }
-    }
-
-    public IEnumerable<T> GetPostfixEnumerable()
-    {
-        if (head == null)
-        {
-            return EmptyEnumerable();
-        }
-
-        return PostfixTraverse(head);
-    }
-
-    private IEnumerable<T> PostfixTraverse(Node<T> node)
-    {
-        if (node.Left != null)
-        {
-            InfixTraverse(node.Left);
-        }
-
-        if (node.Right != null)
-        {
-            InfixTraverse(node.Right);
-        }
-
-        yield return node.Value;
-    }
-
-    public IEnumerable<T> GetPrefixEnumerable()
-    {
-        if (head == null)
-        {
-            return EmptyEnumerable();
-        }
-
-        return PrefixTraverse(head);
-    }
-
-    private IEnumerable<T> PrefixTraverse(Node<T> node)
-    {
-        yield return node.Value;
-
-        if (node.Left != null)
-        {
-            InfixTraverse(node.Left);
-        }
-
-        if (node.Right != null)
-        {
-            InfixTraverse(node.Right);
-        }
-    }
-
-    IEnumerator<T> IEnumerable<T>.GetEnumerator()
-    {
-        return GetInfixEnumerable().GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return ((IEnumerable<T>)this).GetEnumerator();
-    }
-
-    private IEnumerable<T> EmptyEnumerable()
-    {
-        yield break;
-    }
-
     public void CopyTo(T[] array, int arrayIndex)
     {
         throw new NotImplementedException();
@@ -220,7 +141,7 @@ public class BinarySearchTree<T> : ICollection<T>
     {
         Node<T> found = Find(item);
 
-        if(found == null)
+        if (found == null)
         {
             return false;
         }
@@ -268,13 +189,123 @@ public class BinarySearchTree<T> : ICollection<T>
         return true;
     }
 
+    public IEnumerable<T> GetInfixEnumerable()
+    {
+        if (head == null)
+        {
+            return EmptyEnumerable();
+        }
+
+        return InfixTraverse(head);
+    }
+
+    public IEnumerable<T> GetPostfixEnumerable()
+    {
+        if (head == null)
+        {
+            return EmptyEnumerable();
+        }
+
+        List<T> traversedSeq = new List<T>(Count);
+
+        PostfixTraverse(head, item => traversedSeq.Add(item));
+
+        return traversedSeq;
+    }
+
+    public IEnumerable<T> GetPrefixEnumerable()
+    {
+        if (head == null)
+        {
+            return EmptyEnumerable();
+        }
+
+        return PrefixTraverse(head);
+    }
+
+    #endregion
+
+    #region Private
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+    {
+        return GetInfixEnumerable().GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IEnumerable<T>)this).GetEnumerator();
+    }
+
+    private IEnumerable<T> EmptyEnumerable()
+    {
+        yield break;
+    }
+
+    private IEnumerable<T> InfixTraverse(Node<T> node)
+    {
+        if (node.Left != null)
+        {
+            foreach (T item in InfixTraverse(node.Left))
+            {
+                yield return item;
+            }
+        }
+
+        yield return node.Value;
+
+        if (node.Right != null)
+        {
+            foreach (T item in InfixTraverse(node.Right))
+            {
+                yield return item;
+            }
+        }
+    }
+
+    private void PostfixTraverse(Node<T> node, Action<T> callback)
+    {
+        if (node.Left != null)
+        {
+            PostfixTraverse(node.Left, callback);
+        }
+
+        if (node.Right != null)
+        {
+            PostfixTraverse(node.Right, callback);
+        }
+
+        callback(node.Value);
+    }
+
+    private IEnumerable<T> PrefixTraverse(Node<T> node)
+    {
+        yield return node.Value;
+
+        if (node.Left != null)
+        {
+            foreach(T item in PrefixTraverse(node.Left))
+            {
+                yield return item;
+            }
+        }
+
+        if (node.Right != null)
+        {
+            foreach (T item in PrefixTraverse(node.Right))
+            {
+                yield return item;
+            }
+        }
+    }
+
     private Node<T> Find(T item)
     {
         Node<T> node = head;
 
         while (node != null)
         {
-            int c = CleverComarasion(item, node.Value);
+            int c = CleverComparasion(item, node.Value);
 
             if (c == 0)
             {
@@ -305,7 +336,7 @@ public class BinarySearchTree<T> : ICollection<T>
 
         while (node != null)
         {
-            int c = CleverComarasion(child.Value, node.Value);
+            int c = CleverComparasion(child.Value, node.Value);
 
             if (c > 0)
             {
@@ -328,7 +359,7 @@ public class BinarySearchTree<T> : ICollection<T>
         return null;
     }
 
-    private int CleverComarasion(T item1, T item2)
+    private int CleverComparasion(T item1, T item2)
     {
         int c;
         try
@@ -355,6 +386,9 @@ public class BinarySearchTree<T> : ICollection<T>
         }
 
     }
+    #endregion
+
+    #endregion
 
     private class Node<Titem>
     {
