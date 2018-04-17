@@ -11,33 +11,79 @@ using System.Threading.Tasks;
 /// </summary>
 public class BinarySearchTree<T> : ICollection<T>
 {
-    #region ConstantFields
-    #endregion
-
     #region Fields
     private Node<T> head;
     private IComparer<T> comparer;
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Initialize the instance of the BST.
+    /// As a comparer the default comparer is used.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when the T does't implement IComparable or IComparable<typeparamref name="T"/>.</exception>
     public BinarySearchTree()
     {
         HandleComparer(null);
         comparer = Comparer<T>.Default;
     }
+
+    /// <summary>
+    /// Initialize the instance of the BST.
+    /// As a comparer the given comparer is used.
+    /// </summary>
     public BinarySearchTree(IComparer<T> comparer)
     {
         this.comparer = comparer;
     }
+
+    /// <summary>
+    /// Initialize the instance of the BST.
+    /// As a comparer the give comparison is used.
+    /// </summary>
     public BinarySearchTree(Comparison<T> comparison)
     {
         this.comparer = Comparer<T>.Create(comparison);
     }
+
+    /// <summary>
+    /// Initialize the instance of the BST from the collection.
+    /// As a comparer the default comparer is used.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when the T does't implement IComparable or IComparable<typeparamref name="T"/>.</exception>
     public BinarySearchTree(IEnumerable<T> collection)
     {
         HandleComparer(null);
+
         comparer = Comparer<T>.Default;
 
+        InitFromCollection(collection);
+    }
+
+    /// <summary>
+    /// Initialize the instance of the BST from the collection.
+    /// As a comparer the given comparer is used.
+    /// </summary>
+    public BinarySearchTree(IEnumerable<T> collection, IComparer<T> comparer)
+    {
+        this.comparer = comparer;
+
+        InitFromCollection(collection);
+    }
+
+    /// <summary>
+    /// Initialize the instance of the BST from the collection.
+    /// As a comparer the given comparasion is used.
+    /// </summary>
+    public BinarySearchTree(IEnumerable<T> collection, Comparison<T> comparison)
+    {
+        this.comparer = Comparer<T>.Create(comparison);
+
+        InitFromCollection(collection);
+    }
+
+    private void InitFromCollection(IEnumerable<T> collection)
+    {
         if (collection == null)
         {
             throw new ArgumentNullException($"{nameof(collection)} is null");
@@ -58,6 +104,11 @@ public class BinarySearchTree<T> : ICollection<T>
     #region Methods
 
     #region Public
+    /// <summary>
+    /// Add an item to the BST.
+    /// Don't store items with the same keys,in such cases the new item overwrite the old item. 
+    /// </summary>
+    /// <param name="item">The item to add.</param>
     public void Add(T item)
     {
         Count++;
@@ -108,11 +159,18 @@ public class BinarySearchTree<T> : ICollection<T>
         }
     }
 
+    /// <summary>
+    /// Clear all the elements from the BST.
+    /// </summary>
     public void Clear()
     {
         head = null;
     }
 
+    /// <summary>
+    /// Returns true if the item exists in the BST, false otherwise.
+    /// Comparing is carried out by means of a order comparer and the default equality comparer.
+    /// </summary>
     public bool Contains(T item)
     {
         Node<T> found = Find(item);
@@ -132,11 +190,37 @@ public class BinarySearchTree<T> : ICollection<T>
         return false;
     }
 
+    /// <summary>
+    /// Copies the elements of the BST to an System.Array,
+    /// starting at a particular System.Array index.
+    /// </summary>
     public void CopyTo(T[] array, int arrayIndex)
     {
-        throw new NotImplementedException();
+        if(array == null)
+        {
+            throw new ArgumentNullException($"{nameof(array)} is null");
+        }
+
+        if(arrayIndex < 0)
+        {
+            throw new ArgumentOutOfRangeException($"{nameof(arrayIndex)} can not be less than zero");
+        }
+
+        if(array.Length - arrayIndex < Count)
+        {
+            throw new ArgumentException($"the avaliable space from the {nameof(arrayIndex)} to the end of array, does't fit to the size of collection");
+        }
+
+        T[] from = this.ToArray();
+
+        Array.Copy(from, 0, array, arrayIndex, from.Length);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public bool Remove(T item)
     {
         Node<T> found = Find(item);
@@ -194,6 +278,9 @@ public class BinarySearchTree<T> : ICollection<T>
         return GetInfixEnumerable().GetEnumerator();
     }
 
+    /// <summary>
+    /// Return the enumerable that enumerates the BST by the infix traverse.
+    /// </summary>
     public IEnumerable<T> GetInfixEnumerable()
     {
         if (head == null)
@@ -204,6 +291,9 @@ public class BinarySearchTree<T> : ICollection<T>
         return InfixTraverse(head);
     }
 
+    /// <summary>
+    /// Return the enumerable that enumerates the BST by the postfix traverse.
+    /// </summary>
     public IEnumerable<T> GetPostfixEnumerable()
     {
         if (head == null)
@@ -218,6 +308,9 @@ public class BinarySearchTree<T> : ICollection<T>
         return traversedSeq;
     }
 
+    /// <summary>
+    /// Return the enumerable that enumerates the BST by the prefix traverse.
+    /// </summary>
     public IEnumerable<T> GetPrefixEnumerable()
     {
         if (head == null)
