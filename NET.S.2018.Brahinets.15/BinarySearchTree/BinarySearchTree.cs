@@ -111,52 +111,15 @@ public class BinarySearchTree<T> : ICollection<T>
     /// <param name="item">The item to add.</param>
     public void Add(T item)
     {
-        Count++;
         if (head == null)
         {
+            Count = 1;
             head = new Node<T> { Value = item, Left = null, Right = null };
-
             return;
         }
 
-        Node<T> node = head;
+        Add(head, new Node<T> { Value = item, Left = null, Right = null });
 
-        while (true)
-        {
-            int c = CleverComparasion(item, node.Value);
-
-            if (c == 0)
-            {
-                Count--;
-                node.Value = item;
-                break;
-            }
-
-            if (c < 0)
-            {
-                if (node.Left == null)
-                {
-                    node.Left = new Node<T> { Value = item, Left = null, Right = null };
-                    break;
-                }
-                else
-                {
-                    node = node.Left;
-                }
-            }
-            else
-            {
-                if (node.Right == null)
-                {
-                    node.Right = new Node<T> { Value = item, Left = null, Right = null };
-                    break;
-                }
-                else
-                {
-                    node = node.Right;
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -223,23 +186,23 @@ public class BinarySearchTree<T> : ICollection<T>
     /// <returns></returns>
     public bool Remove(T item)
     {
-        Node<T> found = Find(item);
+        Node<T> removed = Find(item);
 
-        if (found == null)
+        if (removed == null)
         {
             return false;
         }
 
-        Node<T> parent = FindParent(found);
+        Node<T> parent = FindParent(removed);
 
         if (parent == null)
         {
             //the head case
         }
 
-        if (found.Left == null && found.Right == null)
+        if (removed.Left == null && removed.Right == null)
         {
-            if (parent.Left == found)
+            if (parent.Left == removed)
             {
                 parent.Left = null;
             }
@@ -250,25 +213,34 @@ public class BinarySearchTree<T> : ICollection<T>
 
         }
 
-        if (found.Left != null && found.Right != null)
+        if (removed.Left != null && removed.Right != null)
         {
+            if (removed.Right.Left == null)
+            {
+                removed.Right.Left = removed.Left;
+            }
+            else
+            {
+
+            }
+
 
         }
         else
         {
             Node<T> cpyFrom = null;
-            if (found.Left == null)
+            if (removed.Left == null)
             {
-                cpyFrom = found.Right;
+                cpyFrom = removed.Right;
             }
             else
             {
-                cpyFrom = found.Left;
+                cpyFrom = removed.Left;
             }
 
-            found.Value = cpyFrom.Value;
-            found.Right = cpyFrom.Right;
-            found.Left = cpyFrom.Left;
+            removed.Value = cpyFrom.Value;
+            removed.Right = cpyFrom.Right;
+            removed.Left = cpyFrom.Left;
         }
         return true;
     }
@@ -324,6 +296,50 @@ public class BinarySearchTree<T> : ICollection<T>
     #endregion
 
     #region Private
+
+    private void Add(Node<T> root, Node<T> newNode)
+    {
+        Count++;
+
+        Node<T> node = root;
+
+        while (true)
+        {
+            int c = CleverComparasion(newNode.Value, node.Value);
+
+            if (c == 0)
+            {
+                Count--;
+                node.Value = newNode.Value;
+                break;
+            }
+
+            if (c < 0)
+            {
+                if (node.Left == null)
+                {
+                    node.Left = newNode;
+                    break;
+                }
+                else
+                {
+                    node = node.Left;
+                }
+            }
+            else
+            {
+                if (node.Right == null)
+                {
+                    node.Right = newNode;
+                    break;
+                }
+                else
+                {
+                    node = node.Right;
+                }
+            }
+        }
+    }
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {

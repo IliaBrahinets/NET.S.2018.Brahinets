@@ -10,9 +10,11 @@ public class Queue<T> : IEnumerable<T>
 {
     private const int Default_Capacity = 8;
 
+    //the concept of the circular buffer.
     private T[] items;
     private int head = -1;
     private int end = -1;
+
     private int version = int.MinValue;
 
     public int Capacity
@@ -40,11 +42,17 @@ public class Queue<T> : IEnumerable<T>
         }
     }
 
+    /// <summary>
+    /// Initialize a new instance of the queue, with the default capacity.
+    /// </summary>
     public Queue()
     {
         items = new T[Default_Capacity];
     }
 
+    /// <summary>
+    /// Initialize a new instance of the queue, with the given capacity.
+    /// </summary>
     public Queue(int capacity)
     {
         if(capacity < 0)
@@ -55,6 +63,10 @@ public class Queue<T> : IEnumerable<T>
         items = new T[capacity];
     }
 
+    /// <summary>
+    /// Initialize a new instance of the queue, with the given collection.
+    /// </summary>
+    /// <param name="collection"></param>
     public Queue(IEnumerable<T> collection)
     {
         if(collection == null)
@@ -84,6 +96,10 @@ public class Queue<T> : IEnumerable<T>
 
     }
 
+    /// <summary>
+    /// Enqueue the item to a queue.
+    /// </summary>
+    /// <param name="item">The item to enqueue.</param>
     public void Enqueue(T item)
     {
         version++;
@@ -113,6 +129,11 @@ public class Queue<T> : IEnumerable<T>
 
     }
 
+    /// <summary>
+    /// Dequeue an item from a queue.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when a queue is empty.</exception>
+    /// <returns>Returns a dequeued item.</returns>
     public T Dequeue()
     {
         version++;
@@ -142,6 +163,9 @@ public class Queue<T> : IEnumerable<T>
         
     }
 
+    /// <summary>
+    /// Returns value of the head item, without dequeuing it.
+    /// </summary>
     public T Peek()
     {
         if(Count == 0)
@@ -152,6 +176,9 @@ public class Queue<T> : IEnumerable<T>
         return items[head];
     }
 
+    /// <summary>
+    /// Makes a queue empty.
+    /// </summary>
     public void Clear()
     {
         if (head < end)
@@ -165,6 +192,9 @@ public class Queue<T> : IEnumerable<T>
         }
     }
 
+    /// <summary>
+    /// Returns a IEnumerator for a queue.
+    /// </summary>
     public Enumerator GetEnumerator()
     {
         return new Enumerator(this);
