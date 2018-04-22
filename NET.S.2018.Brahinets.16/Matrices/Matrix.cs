@@ -10,14 +10,18 @@ namespace Matrices
     public class Matrix<T>
     {
         #region Fields
-        protected virtual IMatrixStore<T> store { get; }
         #endregion
 
         #region Constructors
-
+        /// <summary>
+        /// Initializes an instance with the give n sizes, and with default(T) as elements.
+        /// </summary>
+        /// <param name="n">Number of rows.</param>
+        /// <param name="m">Number of collumns.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
         public Matrix(int n, int m)
         {
-            BoundValidation(n,m);
+            BoundValidation(n, m);
 
             this.N = n;
             this.M = m;
@@ -25,6 +29,18 @@ namespace Matrices
             store = ConstructStore(n, m);
         }
 
+        /// <summary>
+        /// Initialie an instance with the give sizes and the given elements.
+        /// Meaning of the tuple is:
+        /// tuple.item1 - i(row)
+        /// tuple.item2 - j(collumn)
+        /// tuple.item3 - value
+        /// You shouldn't present a full matrix, elements are not given will be initialized with default(T).
+        /// </summary>
+        /// <param name="n">Number of rows.</param>
+        /// <param name="m">Number of collumns.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when collection is null.</exception>
         public Matrix(int n, int m, IEnumerable<Tuple<int, int, T>> collection)
         {
             if (collection == null)
@@ -47,6 +63,16 @@ namespace Matrices
             }
         }
 
+        /// <summary>
+        /// Initialize an instance with the given sizes and the given array.
+        /// You shouldn't provide all the matrix, but the sizes of the array must not be more the sizes of matrix.
+        /// Elements was not presented will be initialized with default(T).
+        /// </summary>
+        /// <param name="n">Number of rows.</param>
+        /// <param name="m">Number of collumns.</param>
+        /// <param name="array">Elements of matrix.</param>
+        /// <exception cref="ArgumentNullException">Thrown when array is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
         public Matrix(int n, int m, T[][] array)
         {
             BoundValidation(n, m);
@@ -61,20 +87,25 @@ namespace Matrices
                 throw new ArgumentNullException($"{nameof(array)} is null");
             }
 
-            for(int i = 0; i < N; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                for(int j = 0; j < M; j++)
+                for (int j = 0; j < array[i]?.Length; j++)
                 {
                     this[i, j] = array[i][j];
                 }
             }
         }
 
+        protected Matrix()
+        {
+
+        }
+
         protected void BoundValidation(int n, int m)
         {
             if (n <= 0 || m <= 0)
             {
-                throw new IndexOutOfRangeException($"{nameof(N)} or {nameof(N)} is not valid");
+                throw new ArgumentOutOfRangeException($"{nameof(N)} or {nameof(N)} is not valid");
             }
         }
 
@@ -86,6 +117,9 @@ namespace Matrices
         #endregion
 
         #region Events
+        /// <summary>
+        /// Raise when a value somwhere(i,j) in the matrix was changed.
+        /// </summary>
         public event EventHandler<MatrixEventArgs> ValueChanged = delegate { };
         #endregion
 
@@ -109,16 +143,34 @@ namespace Matrices
 
         public virtual int N { get; }
         public virtual int M { get; }
+        protected virtual IMatrixStore<T> store { get; }
 
         #endregion
 
         #region Methods
 
         #region Public
+        public override string ToString()
+        {
+            StringBuilder str = new StringBuilder();
 
+            for (int i = 0; i < N; i++)
+            { 
+                int j;
+                for (j = 0; j < M - 1; j++)
+                {
+                    str.Append(GetElement(i, j).ToString() + ' ');
+                }
+
+                str.Append(GetElement(i, j));
+                str.AppendLine();
+            }
+
+            return str.ToString();
+        }
         #endregion
 
-        #region Protected
+            #region Protected
         protected virtual T GetElement(int i, int j)
         {
             return store.GetElement(i, j);

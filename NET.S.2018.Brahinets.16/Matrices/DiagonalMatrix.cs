@@ -7,23 +7,35 @@ using Matrices.Stores;
 
 namespace Matrices
 {
-    class DiagonalMatrix<T>:QuadMatrix<T>
+    public class DiagonalMatrix<T>:QuadMatrix<T>
     {
         #region Fields
 
         #endregion
 
         #region Constructors
-        public DiagonalMatrix(int N) : base(N)
+        public DiagonalMatrix(int n) : base(n)
         {
         }
 
-        public DiagonalMatrix(int N, IEnumerable<Tuple<int, int, T>> collection) : base(N, collection)
+        public DiagonalMatrix(int n, T[] array):base(n)
         {
-        }
+            if(array == null)
+            {
+                throw new ArgumentNullException($"{nameof(array)} is null");
+            }
 
-        public DiagonalMatrix(int n, T[][] array) : base(n, array)
-        {
+            if(array.Length > n)
+            {
+                throw new ArgumentException($"size of {nameof(array)} more than {nameof(n)}");
+            }
+
+            store = ConstructStore(n, n);
+
+            for(int i = 0; i < array.Length; i++)
+            {
+                this[i, i] = array[i];
+            }
         }
 
         protected override IMatrixStore<T> ConstructStore(int n, int m)
@@ -43,7 +55,9 @@ namespace Matrices
         #endregion
 
         #region Properties
-
+        public override int N { get; }
+        public override int M { get; }
+        protected override IMatrixStore<T> store { get; }
         #endregion
 
         #region Methods

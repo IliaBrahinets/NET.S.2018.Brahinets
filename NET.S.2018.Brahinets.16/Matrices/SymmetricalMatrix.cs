@@ -7,18 +7,18 @@ using Matrices.Stores;
 
 namespace Matrices
 {
-    class SymmetricalMatrix<T> : QuadMatrix<T>
+    public class SymmetricalMatrix<T> : QuadMatrix<T>
     {
         #region Fields
         #endregion
 
         #region Constructors
-        public SymmetricalMatrix(int N) : base(N)
+        public SymmetricalMatrix(int n) : base(n)
         {
 
         }
 
-        public SymmetricalMatrix(int N, IEnumerable<Tuple<int, int, T>> collection) : base(N, collection)
+        public SymmetricalMatrix(int n, IEnumerable<Tuple<int, int, T>> collection) : base(n, collection)
         {
 
         }

@@ -13,6 +13,10 @@ namespace Matrices
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Initialize a new quad matrix with the give n size, and with default(T) as elements.
+        /// </summary>
+        /// <param name="N">Size of the quad matrix.</param>
         public QuadMatrix(int N) : base(N, N)
         {
         }
@@ -23,6 +27,11 @@ namespace Matrices
 
         public QuadMatrix(int n, T[][] array):base(n,n,array)
         {
+        }
+
+        protected QuadMatrix()
+        {
+
         }
 
         #endregion
