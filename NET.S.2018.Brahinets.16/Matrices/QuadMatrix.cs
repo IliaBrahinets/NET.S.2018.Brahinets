@@ -19,12 +19,10 @@ namespace Matrices
 
         public QuadMatrix(int N, IEnumerable<Tuple<int, int, T>> collection) : base(N, N, collection)
         {
-
         }
 
-        protected QuadMatrix()
+        public QuadMatrix(int n, T[][] array):base(n,n,array)
         {
-            
         }
 
         #endregion
