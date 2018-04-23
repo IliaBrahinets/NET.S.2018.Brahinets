@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task4.Solution
+namespace Task5.Solution.PartConverters
 {
-    public interface IAveragingMethod
+    public interface IDocumentPartConverter
     {
-        double Calculate(List<double> values);
+        string Convert(DocumentPart elem);
     }
 }

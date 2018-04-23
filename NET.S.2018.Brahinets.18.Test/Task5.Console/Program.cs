@@ -1,8 +1,11 @@
-﻿namespace Task5.Console
+﻿using System.Collections.Generic;
+using System;
+using Task5;
+using Task5.Solution.Converters;
+using Task5.Solution;
+
+namespace Task5.Console
 {
-    using System.Collections.Generic;
-    using System;
-    using Task5;
 
     class Program
     {
@@ -17,11 +20,11 @@
 
             Document document = new Document(parts);
 
-            Console.WriteLine(document.ToHtml());
+            DocumentConverterProvider htmlProvider = new HtmlConverter();
 
-            Console.WriteLine(document.ToPlainText());
+            System.Console.WriteLine(document.ToAnotherFromat(htmlProvider));
 
-            Console.WriteLine(document.ToLaTeX());
+            System.Console.ReadKey();
         }
     }
 }

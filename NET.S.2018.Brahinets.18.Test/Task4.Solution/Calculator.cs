@@ -8,7 +8,7 @@ namespace Task4.Solution
 {
     public class Calculator
     {
-        public double CalculateAverage(List<double> values, AveragingMethod averagingMethod)
+        public double CalculateAverage(List<double> values, IAveragingMethod averagingMethod)
         {
             if (values == null)
             {

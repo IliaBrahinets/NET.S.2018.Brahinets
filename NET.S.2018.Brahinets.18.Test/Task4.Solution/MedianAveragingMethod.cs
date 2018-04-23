@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task4.Solution
 {
-    public class MedianAveragingMethod : AveragingMethod
+    public class MedianAveragingMethod : IAveragingMethod
     {
         public double Calculate(List<double> values)
         {
