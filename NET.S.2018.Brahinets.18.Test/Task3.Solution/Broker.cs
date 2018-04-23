@@ -19,7 +19,7 @@ namespace Task3.Solution
             stock.Update += Stock_Replenish;
         }
 
-        private void Stock_Replenish(object sender, StockInfoEventArgs replenishInfo)
+        private void Stock_Replenish(object sender, StockUpdateEventArgs replenishInfo)
         {
             if (replenishInfo.USD > 30)
                 Console.WriteLine("Брокер {0} продает доллары;  Курс доллара: {1}", this.Name, replenishInfo.USD);

@@ -8,18 +8,18 @@ namespace Task3.Solution
 {
     public class Stock
     {
-        public event EventHandler<StockInfoEventArgs> Update = delegate { };
+        public event EventHandler<StockUpdateEventArgs> Update = delegate { };
 
         public void Market()
         {
             Random rnd = new Random();
-            var replenishInfo = new StockInfoEventArgs();
+            var replenishInfo = new StockUpdateEventArgs();
             replenishInfo.USD = rnd.Next(20, 40);
             replenishInfo.Euro = rnd.Next(30, 50);
             OnReplenish(replenishInfo);          
         }
 
-        protected virtual void OnReplenish(StockInfoEventArgs args)
+        protected virtual void OnReplenish(StockUpdateEventArgs args)
         {
             Update(this, args);
         }
