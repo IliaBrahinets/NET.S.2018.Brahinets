@@ -40,6 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\LengthCondition.cs" />
+    <Compile Include="Conditions\InvalidCharacterCondition.cs" />
+    <Compile Include="IPasswordCondition.cs" />
+    <Compile Include="Conditions\EmptyStringConditions.cs" />
+    <Compile Include="PasswordCheckerService.cs" />
+    <Compile Include="Persistance\FakeRepository.cs" />
+    <Compile Include="Persistance\IRepository.cs" />
+    <Compile Include="Persistance\SqlRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
