@@ -16,10 +16,10 @@ namespace Task3.Solution
         {
             this.Name = name;
             this.stock = stock;
-            stock.Replenish += Stock_Replenish;
+            stock.Update += Stock_Replenish;
         }
 
-        private void Stock_Replenish(object sender, StockReplenishEventArgs replenishInfo)
+        private void Stock_Replenish(object sender, StockInfoEventArgs replenishInfo)
         {
             if (replenishInfo.Euro > 40)
                 Console.WriteLine("Банк {0} продает евро;  Курс евро: {1}", this.Name, replenishInfo.Euro);
@@ -29,7 +29,7 @@ namespace Task3.Solution
 
         public void StopTrade()
         {
-            stock.Replenish -= Stock_Replenish;
+            stock.Update -= Stock_Replenish;
             stock = null;
         }
     }
