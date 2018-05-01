@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigModule.cs" />
+    <Compile Include="FileLoggerCreator.cs" />
     <Compile Include="FileUrlProviderCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
