@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLConverter", "URLConverter\URLConverter.csproj", "{5CC3EF8A-FD99-477C-A8A0-ED455918FEC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLConverter.Tests", "URLConverter.Tests\URLConverter.Tests.csproj", "{16BD40B6-2645-4E0D-9D65-E2181647CFF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CC3EF8A-FD99-477C-A8A0-ED455918FEC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC3EF8A-FD99-477C-A8A0-ED455918FEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC3EF8A-FD99-477C-A8A0-ED455918FEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC3EF8A-FD99-477C-A8A0-ED455918FEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16BD40B6-2645-4E0D-9D65-E2181647CFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16BD40B6-2645-4E0D-9D65-E2181647CFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16BD40B6-2645-4E0D-9D65-E2181647CFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16BD40B6-2645-4E0D-9D65-E2181647CFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B92A4FD4-DDD6-483D-883E-ECB48B15D722}
+	EndGlobalSection
+EndGlobal

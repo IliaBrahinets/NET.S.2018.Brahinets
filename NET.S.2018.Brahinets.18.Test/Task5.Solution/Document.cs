@@ -14,6 +14,7 @@ namespace Task5.Solution
             {
                 throw new ArgumentNullException(nameof(parts));
             }
+
             this.parts = new List<DocumentPart>(parts);
         }
 
