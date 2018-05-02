@@ -51,6 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FileURLProvider.cs" />
     <Compile Include="Providers\IURLAddresesProvider.cs" />
+    <Compile Include="Validators\DefaultURLValidator.cs" />
+    <Compile Include="Validators\IURLValidator.cs" />
     <Compile Include="URLsToXMLService.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -12,12 +12,14 @@ namespace URLParser
         private readonly string path;
         private readonly IURLParser parser;
         private readonly ILogger logger;
+        private readonly IURLValidator urlValidator; 
 
-        public FileURLProvider(string path, IURLParser parser, ILogger logger)
+        public FileURLProvider(string path, IURLParser parser, ILogger logger, IURLValidator urlValidator)
         {
             this.path = path ?? throw new ArgumentNullException($"{nameof(path)} is null");
             this.parser = parser ?? throw new ArgumentNullException($"{nameof(parser)} is null");
             this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} is null");
+            this.urlValidator = urlValidator ?? throw new ArgumentNullException($"{nameof(urlValidator)} is null");
             CheckExistance();
         }
 
@@ -30,14 +32,14 @@ namespace URLParser
 
             foreach(var tryUrl in content)
             {
-                try
+                if (urlValidator.IsValid(tryUrl))
                 {
                     URL parsedUrl = parser.Parse(tryUrl);
                     parsedUrls.Add(parsedUrl);
                 }
-                catch
+                else
                 {
-                    logger.Log($"can't parse { tryUrl }");
+                    logger.Log($"can't parse { tryUrl }"); 
                 }
             }
 

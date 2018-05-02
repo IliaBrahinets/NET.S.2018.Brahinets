@@ -9,10 +9,12 @@ namespace URLParser
     public class FakeURLProvider : IURLAddresesProvider
     {
         private readonly IURLParser parser;
+        private readonly IURLValidator urlValidator;
 
-        public FakeURLProvider(IURLParser parser)
+        public FakeURLProvider(IURLParser parser, IURLValidator urlValidator)
         {
             this.parser = parser;
+            this.urlValidator = urlValidator;
         }
 
         public IEnumerable<URL> GetURLs()

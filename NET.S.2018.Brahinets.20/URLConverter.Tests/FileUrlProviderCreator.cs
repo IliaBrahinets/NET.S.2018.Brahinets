@@ -11,7 +11,7 @@ namespace Tests
         {
             string filePath = ConfigurationSettings.AppSettings["readFrom"];
 
-            return new FileURLProvider(filePath, context.Kernel.Get<IURLParser>(), context.Kernel.Get<ILogger>());
+            return new FileURLProvider(filePath, context.Kernel.Get<IURLParser>(), context.Kernel.Get<ILogger>(),context.Kernel.Get<IURLValidator>());
         }
     }
 }
