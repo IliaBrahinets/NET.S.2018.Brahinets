@@ -55,8 +55,6 @@ namespace Matrices
         #endregion
 
         #region Properties
-        public override int N { get; }
-        public override int M { get; }
         protected override IMatrixStore<T> store { get; }
         #endregion
 

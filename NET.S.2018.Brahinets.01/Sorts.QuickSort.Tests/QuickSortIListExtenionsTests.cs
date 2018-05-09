@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sorts.QuickSort;
 
-namespace Sorts.MergeSort.Tests
+namespace Sorts.QuickSort.Tests
 {
     [TestClass]
-    public class IListExtensionsTests
+    public class QuickSortIListExtenionsTests
     {
         private TestContext testContextInstance;
 
@@ -21,7 +23,7 @@ namespace Sorts.MergeSort.Tests
         }
 
         [TestMethod]
-        public void MergeSort_RandomUnorderedIn_OrderedOut()
+        public void QuickSort_RandomUnorderedIn_OrderedOut()
         {
             List<int> arrayIn = new List<int>();
             Random randomGen = new Random(DateTime.Now.GetHashCode());
@@ -32,14 +34,14 @@ namespace Sorts.MergeSort.Tests
 
             List<int> arrayInCopy = new List<int>(arrayIn);
 
-            arrayIn.MergeSort();
+            arrayIn.QuickSort();
             arrayInCopy.Sort();
 
             CollectionAssert.AreEqual(arrayIn, arrayInCopy);
         }
 
         [TestMethod]
-        public void MergeSort_RandomUnorderedWithReverseComparerIn_ReverseOrderedOut()
+        public void QuickSort_RandomUnorderedWithReverseComparerIn_ReverseOrderedOut()
         {
             List<int> arrayIn = new List<int>();
             Random randomGen = new Random(DateTime.Now.GetHashCode());
@@ -50,21 +52,21 @@ namespace Sorts.MergeSort.Tests
 
             List<int> arrayInCopy = new List<int>(arrayIn);
 
-            arrayIn.MergeSort((x, y) => y - x);
+            arrayIn.QuickSort((x, y) => y - x);
             arrayInCopy.Sort((x, y) => y - x);
 
             CollectionAssert.AreEqual(arrayIn, arrayInCopy);
         }
 
         [TestMethod]
-        public void MergeSort_EmptyArray_DontBreakDown()
+        public void QuickSort_EmptyArray_DontBreakDown()
         {
             List<int> arrayIn = new List<int>();
             bool breakDown = false;
 
             try
             {
-                arrayIn.MergeSort();
+                arrayIn.QuickSort();
             }
             catch (Exception e)
             {

@@ -7,11 +7,11 @@ using Sorts.SortDataValidation;
 
 namespace Sorts.MergeSort
 {
-    public static partial class IListExtensions
+    public static partial class MergeSortIListExtensions
     {
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using merge sort algorithm, 
-        /// as the comparer used default comparer.
+        /// as a comparer used the default comparer.
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the type of sorting elements is not comparable.</exception>
@@ -22,7 +22,7 @@ namespace Sorts.MergeSort
 
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using merge sort algorithm, 
-        /// as the comparer used presented comparison.
+        /// as a comparer used the presented comparison.
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown when the array or comparison is null.</exception>
         public static void MergeSort<T>(this IList<T> arr, Comparison<T> comparison)
@@ -34,7 +34,7 @@ namespace Sorts.MergeSort
 
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using merge sort algorithm, 
-        /// as the comparer used presented comparer.
+        /// as a comparer used the presented comparer.
         /// </summary>
         /// <param name="comparer">If it is null, replaced by the default comparer.</param>
         /// <exception cref="ArgumentNullException">The array is null.</exception>
@@ -46,7 +46,7 @@ namespace Sorts.MergeSort
 
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using merge sort algorithm, 
-        /// as the comparer used presented comparer.
+        /// as a comparer used the presented comparer.
         /// </summary>
         /// <param name="left">Null is replaced on zero.</param>
         /// <param name="right">Null is replaced on the last index of the array.</param>

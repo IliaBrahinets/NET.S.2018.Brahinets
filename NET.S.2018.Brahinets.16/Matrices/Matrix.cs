@@ -7,26 +7,23 @@ using Matrices.Stores;
 
 namespace Matrices
 {
-    public class Matrix<T>
+    public abstract class AbstractQuadMatrix<T>
     {
         #region Fields
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Initializes an instance with the give n sizes, and with default(T) as elements.
+        /// Initializes an instance with the given(n) size, and with default(T) as elements.
         /// </summary>
-        /// <param name="n">Number of rows.</param>
-        /// <param name="m">Number of collumns.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
-        public Matrix(int n, int m)
+        /// <param name="n">Size of the quad matrix.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when n is equal or less than zero.</exception>
+        public AbstractQuadMatrix(int n)
         {
-            BoundValidation(n, m);
+            BoundValidation(n);
 
             this.N = n;
-            this.M = m;
 
-            store = ConstructStore(n, m);
         }
 
         /// <summary>
@@ -37,23 +34,19 @@ namespace Matrices
         /// tuple.item3 - value
         /// You shouldn't present a full matrix, elements are not given will be initialized with default(T).
         /// </summary>
-        /// <param name="n">Number of rows.</param>
-        /// <param name="m">Number of collumns.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
+        /// <param name="n">Size of the quad matrix</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when n is equal or less than zero.</exception>
         /// <exception cref="ArgumentNullException">Thrown when collection is null.</exception>
-        public Matrix(int n, int m, IEnumerable<Tuple<int, int, T>> collection)
+        public AbstractQuadMatrix(int n, IEnumerable<Tuple<int, int, T>> collection)
         {
             if (collection == null)
             {
                 throw new ArgumentNullException($"{nameof(collection)} is null");
             }
 
-            BoundValidation(n, m);
+            BoundValidation(n);
 
             this.N = n;
-            this.M = m;
-
-            store = ConstructStore(n, m);
 
             foreach (var elem in collection)
             {
@@ -68,19 +61,15 @@ namespace Matrices
         /// You shouldn't provide all the matrix, but the sizes of the array must not be more the sizes of matrix.
         /// Elements was not presented will be initialized with default(T).
         /// </summary>
-        /// <param name="n">Number of rows.</param>
-        /// <param name="m">Number of collumns.</param>
+        /// <param name="n">Size of the quad matrix.</param>
         /// <param name="array">Elements of matrix.</param>
         /// <exception cref="ArgumentNullException">Thrown when array is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when n or m is equal or less than zero.</exception>
-        public Matrix(int n, int m, T[][] array)
+        public AbstractQuadMatrix(int n, T[][] array)
         {
-            BoundValidation(n, m);
+            BoundValidation(n);
 
             this.N = n;
-            this.M = m;
-
-            store = ConstructStore(n, m);
 
             if (array == null)
             {
@@ -96,22 +85,12 @@ namespace Matrices
             }
         }
 
-        protected Matrix()
+        protected void BoundValidation(int n)
         {
-
-        }
-
-        protected void BoundValidation(int n, int m)
-        {
-            if (n <= 0 || m <= 0)
+            if (n <= 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(N)} or {nameof(N)} is not valid");
+                throw new ArgumentOutOfRangeException($"{nameof(N)} is not valid");
             }
-        }
-
-        protected virtual IMatrixStore<T> ConstructStore(int n, int m)
-        {
-            return new DefaultMatrixStore<T>(n, m);
         }
 
         #endregion
@@ -142,8 +121,6 @@ namespace Matrices
         }
 
         public virtual int N { get; }
-        public virtual int M { get; }
-        protected virtual IMatrixStore<T> store { get; }
 
         #endregion
 
@@ -170,17 +147,16 @@ namespace Matrices
         }
         #endregion
 
-            #region Protected
-        protected virtual T GetElement(int i, int j)
-        {
-            return store.GetElement(i, j);
-        }
+        #region Protected
+        protected abstract T GetElement(int i, int j);
 
-        protected virtual void SetElement(int i, int j, T value)
+        protected void SetElement(int i, int j, T value)
         {
             OnValueChanged(new MatrixEventArgs(i, j));
-            store.SetElement(i, j, value);
+            PersisElement(i, j, value);
         }
+
+        protected abstract void PersisElement(int i, int j, T value);
 
         protected virtual void OnValueChanged(MatrixEventArgs eventArgs)
         {
@@ -189,7 +165,7 @@ namespace Matrices
 
         protected bool IsIndexesValid(int i, int j)
         {
-            if (i < 0 || i >= N || j < 0 || j >= M)
+            if (i < 0 || i >= N || j < 0 || j >= N)
             {
                 return false;
             }
@@ -200,7 +176,7 @@ namespace Matrices
         {
             if (!IsIndexesValid(i, j))
             {
-                throw new IndexOutOfRangeException($"{nameof(i)} or {nameof(j)} is not valid");
+                throw new ArgumentOutOfRangeException($"{nameof(i)} or {nameof(j)} is not valid");
             }
         }
         #endregion

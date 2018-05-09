@@ -7,11 +7,11 @@ using Sorts.SortDataValidation;
 
 namespace Sorts.QuickSort
 {
-    public static partial class IListExtensions
+    public static partial class QuickSortIListExtensions
     {
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using quicksort algorithm, 
-        /// as the comparer used default comparer.
+        /// as a comparer used the default comparer.
         /// </summary>
         /// <exception cref="ArgumentNullException">The array is null.</exception>
         /// <exception cref="InvalidOperationException">The type of sorting elements is not comparable.</exception>
@@ -34,7 +34,7 @@ namespace Sorts.QuickSort
 
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using quicksort algorithm, 
-        /// as the comparer used presented comparer.
+        /// as the comparer used the presented comparer.
         /// </summary>
         /// <param name="comparer">Null, replaced by the default comparer.</param>
         /// <exception cref="ArgumentNullException">The array is null.</exception>
@@ -46,7 +46,7 @@ namespace Sorts.QuickSort
 
         /// <summary>
         /// Sort the entire of any implementation of the generic IList interface using quicksort algorithm, 
-        /// as the comparer used presented comparer.
+        /// as a comparer used the presented comparer.
         /// </summary>
         /// <param name="left">Null is replaced on zero.</param>
         /// <param name="right">Null is replaced on the last index of the array.</param>

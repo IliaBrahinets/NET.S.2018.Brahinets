@@ -29,11 +29,6 @@ namespace Matrices
         {
         }
 
-        protected QuadMatrix()
-        {
-
-        }
-
         #endregion
 
         #region Properties
