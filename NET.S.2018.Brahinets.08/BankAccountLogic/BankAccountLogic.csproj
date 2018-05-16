@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankAccount.cs" />
+    <Compile Include="BankAccounts\BankAccount.cs" />
     <Compile Include="BankAccountsFactory.cs" />
+    <Compile Include="BankAccounts\BaseAccount.cs" />
+    <Compile Include="BankAccounts\GoldAccount.cs" />
+    <Compile Include="BankAccounts\PlatinumAccount.cs" />
+    <Compile Include="BankAccounts\SilverAccount.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="IBankAccountFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

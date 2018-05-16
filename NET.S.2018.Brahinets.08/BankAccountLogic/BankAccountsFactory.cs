@@ -3,41 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankAccountLogic.BankAccounts;
 
 namespace BankAccountLogic
 {
-    public class BankAccountsFactory
+    public class BankAccountsFactory:IBankAccountFactory
     {
-        public BankAccount CreateBaseBankAccount(int id, Client owner)
+        public BankAccount CreateBaseBankAccount(int accountNumber, Client owner, int balance = 0, int bonusPoints = 0)
         {
-            const int balanceImportancy = 1;
-            const int replenishemntImportancy = 1;
-
-            return new BankAccount(id, owner, balanceImportancy, replenishemntImportancy);
+            return new BaseAccount(accountNumber, owner, balance, bonusPoints);
         }
 
-        public BankAccount CreateSilverBankAccount(int id, Client owner)
+        public BankAccount CreateSilverBankAccount(int accountNumber, Client owner, int balance = 0, int bonusPoints = 0)
         {
-            const int balanceImportancy = 2;
-            const int replenishemntImportancy = 2;
-
-            return new BankAccount(id, owner, balanceImportancy, replenishemntImportancy);
+            return new SilverAccount(accountNumber, owner, balance, bonusPoints);
         }
 
-        public BankAccount CreateGoldBankAccount(int id, Client owner)
+        public BankAccount CreateGoldBankAccount(int accountNumber, Client owner, int balance = 0, int bonusPoints = 0)
         {
-            const int balanceImportancy = 3;
-            const int replenishemntImportancy = 3;
-
-            return new BankAccount(id, owner, balanceImportancy, replenishemntImportancy);
+            return new GoldAccount(accountNumber, owner, balance, bonusPoints);
         }
 
-        public BankAccount CreatePlatinumBankAccount(int id, Client owner)
+        public BankAccount CreatePlatinumBankAccount(int accountNumber, Client owner, int balance = 0, int bonusPoints = 0)
         {
-            const int balanceImportancy = 4;
-            const int replenishemntImportancy = 4;
-
-            return new BankAccount(id, owner, balanceImportancy, replenishemntImportancy);
+            return new PlatinumAccount(accountNumber, owner, balance, bonusPoints);
         }
     }
 }

@@ -34,5 +34,9 @@ namespace BankAccountLogic
             LastName = client.LastName;
         }
 
+        public override string ToString()
+        {
+            return FullName;
+
     }
 }
