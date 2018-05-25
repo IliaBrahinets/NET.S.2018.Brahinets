@@ -11,11 +11,13 @@ namespace ClientCode
 {
     public class ExampleOfUseBankAccountClass
     {
-        public static void Example()
+        public static void Main(string[] args)
         {
-            BankAccountsFactory factory = new BankAccountsFactory();
+            BankAccountService service = new BankAccountService(new FakeRepository(), new BankAccountsFactory());
 
-            factory.CreateBaseBankAccount(1, new Client("Brahinets", "Ilia", "Andrevich"));
+            service.CreateAccount(AccountType.BaseAccount, 1, new Client("Brahinets", "Ilia", "Andreevich"), 0, 0);
+
+            Console.ReadKey();
         }
     }
 }

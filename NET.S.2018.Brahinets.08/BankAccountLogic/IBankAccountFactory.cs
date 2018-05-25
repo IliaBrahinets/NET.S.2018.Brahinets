@@ -7,11 +7,11 @@ using BankAccountLogic.BankAccounts;
 
 namespace BankAccountLogic
 {
-    interface IBankAccountFactory
+    public interface IBankAccountFactory
     {
-        BankAccount CreateBaseBankAccount(int accountNumber, Client owner, int balance, int bonusPoints);
-        BankAccount CreateSilverBankAccount(int accountNumber, Client owner, int balance, int bonusPoints);
-        BankAccount CreateGoldBankAccount(int accountNumber, Client owner, int balance, int bonusPoints);
-        BankAccount CreatePlatinumBankAccount(int accountNumber, Client owner, int balance, int bonusPoints);
+        BankAccount CreateBaseBankAccount(int accountNumber, Client owner, Decimal balance, int bonusPoints);
+        BankAccount CreateSilverBankAccount(int accountNumber, Client owner, Decimal balance, int bonusPoints);
+        BankAccount CreateGoldBankAccount(int accountNumber, Client owner, Decimal balance, int bonusPoints);
+        BankAccount CreatePlatinumBankAccount(int accountNumber, Client owner, Decimal balance, int bonusPoints);
     }
 }
