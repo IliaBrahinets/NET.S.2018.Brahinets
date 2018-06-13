@@ -1,5 +1,5 @@
 ## Задачи
 1. Выполнить рефакторинг класса (с целью сокращения повторного кода) в [алгоритмах Евклида](https://github.com/AnzhelikaKravchuk/Training.-Spring-2018/tree/master/Day%205) (рефакторинг возможен только в случае, когда все метод находятся в одном классе!). **Интерфейс класса измениться не должен.** Проверить работу существующих модульных тестов.
-Решение:https://github.com/djbragas/NET.S.2018.Brahinets/tree/master/NET.S.2018.Brahinets.05/MathExtension
+Решение:https://github.com/IliaBrahinets/NET.S.2018.Brahinets/tree/master/NET.S.2018.Brahinets.05/MathExtension
 2. В класс с [алгоритмом сортировки не прямоугольной матрицы](https://github.com/AnzhelikaKravchuk/Training.-Spring-2018/tree/master/Day%206), принимающим как компаратор интерфейс IComparer<int[]> добавить метод, принимающий как параметр делегат-компаратор, инкапсулирующий логику сравнения строк матрицы. Протестировать работу разработанного метода на примере сортировки матрицы, используя прежние критерии сравнения. Класс реализовать двумя способами, «замкнув» в первом варианте реализацию метода сортировки с делегатом на метод с интерфейсом, во втором – наоборот.
-Решение:https://github.com/djbragas/NET.S.2018.Brahinets/tree/master/NET.S.2018.Brahinets.06
+Решение:https://github.com/IliaBrahinets/NET.S.2018.Brahinets/tree/master/NET.S.2018.Brahinets.06
